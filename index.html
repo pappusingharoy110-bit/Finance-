@@ -49,11 +49,12 @@
         videosTab: "Video Section",
         quizTab: "Practice & Quiz",
         selectTopic: "Select a Topic",
+        selectLevel: "Select Level",
         keyTakeaways: "Key Takeaways",
         realExample: "Practical Example",
         correct: "Correct!",
         incorrect: "Incorrect",
-        videoNotice: "Embedded Video Tutorials",
+        videoNotice: "Embedded Video Tutorial",
         switchLang: "বাংলা",
       },
       bn: {
@@ -63,6 +64,7 @@
         videosTab: "ভিডিও সেশন",
         quizTab: "অনুশীলনী ও কুইজ",
         selectTopic: "বিষয় নির্বাচন করুন",
+        selectLevel: "লেভেল নির্বাচন করুন",
         keyTakeaways: "মূল বিষয়বস্তু",
         realExample: "বাস্তব উদাহরণ",
         correct: "সঠিক উত্তর!",
@@ -142,8 +144,8 @@
           explanationBn: "চক্রবৃদ্ধি প্রক্রিয়ায় মূলধনের পাশাপাশি জমাকৃত সুদের ওপরও নতুন সুদ যোগ হয়।"
         }]
       },
-            {
-        id: "int-3", level: "intermediate", num: 5,
+      {
+        id: "int-1", level: "intermediate", num: 4,
         youtubeId: "Xn7KewMRE70",
         titleEn: "Basics of Stock Market",
         titleBn: "শেয়ার বাজারের প্রাথমিক ধারণা",
@@ -152,7 +154,7 @@
         keyPointsEn: ["Ownership in companies", "Capital appreciation and dividends", "Requires risk management"],
         keyPointsBn: ["কোম্পানির আংশিক মালিকানা প্রাপ্তি", "লভ্যাংশ (Dividend) ও শেয়ারের দাম বৃদ্ধির সুযোগ", "সঠিক ঝুঁকি ব্যবস্থাপনার প্রয়োজন"],
         exampleEn: "Buying 10 shares of a growing company allows you to profit if the company increases its earnings.",
-        exampleBn: "একটি লাভজনক কোম্পানির ১০টি শেয়ার কিনলে, কোম্পানি বড় হওয়ার সাথে সাথে আপনার বিনিয়োগের মানও বাড়ে।",
+        exampleBn: "একটি লাভজনক কোম্পানির ১০টি শেয়ার কিনলে, কোম্পানি বড় হওয়ার সাথে সাথে আপনার বিনিয়োগের মানও বাড়ে।",
         problems: [{
           qEn: "What does buying a stock represent?",
           qBn: "একটি কোম্পানির শেয়ার কেনার অর্থ কী?",
@@ -164,7 +166,7 @@
         }]
       },
       {
-        id: "adv-1", level: "advanced", num: 6,
+        id: "adv-1", level: "advanced", num: 5,
         youtubeId: "Y64InPylzE0",
         titleEn: "Understanding Inflation",
         titleBn: "মুদ্রাস্ফীতি (Inflation) ও আপনার টাকা",
@@ -185,14 +187,14 @@
         }]
       },
       {
-        id: "adv-2", level: "advanced", num: 7,
+        id: "adv-2", level: "advanced", num: 6,
         youtubeId: "J2p_L56y79k",
         titleEn: "Good Debt vs Bad Debt",
         titleBn: "ভালো ঋণ বনাম খারাপ ঋণের পার্থক্য",
         introEn: "Good debt helps generate long-term wealth or income, while bad debt drains your money on depreciating assets.",
         introBn: "ভালো ঋণ আপনার আয় বা সম্পদ বাড়াতে সাহায্য করে, আর খারাপ ঋণ আপনার পকেট থেকে টাকা খালি করে দেয়।",
         keyPointsEn: ["Good debt: Home loan, Education loan", "Bad debt: High-interest Credit Card, personal loans", "Avoid debt traps"],
-        keyPointsBn: ["ভালো ঋণ: শিক্ষার জন্য লোন, ব্যাবসায়িক বিনিয়োগ", "খারাপ ঋণ: উচ্চ সুদের ক্রেডিট কার্ড বা অপ্রয়োজনীয় পার্সোনাল লোন", "ঋণের ফাঁদ এড়িয়ে চলুন"],
+        keyPointsBn: ["ভালো ঋণ: শিক্ষার জন্য লোন, ব্যাবসায়িক বিনিয়োগ", "খারাপ ঋণ: উচ্চ সুদের ক্রেডিট কার্ড বা অপ্রয়োজনীয় পার্সোনাল লোন", "ঋণের ফাঁদ এড়িয়ে চলুন"],
         exampleEn: "Using a business loan to expand income is good debt; using high-interest loan for expensive gadgets is bad debt.",
         exampleBn: "ব্যবসা বাড়ানোর লোন হলো ভালো ঋণ, কিন্তু বেশি সুদে নতুন দামি ফোন কেনার লোন হলো খারাপ ঋণ।",
         problems: [{
@@ -203,10 +205,8 @@
           correct: 1,
           explanationEn: "Loans taken for non-essential luxuries with high interest rate harm financial growth.",
           explanationBn: "উচ্চ সুদে বিলাসিতার জিনিস কেনার ঋণ কোনো আয় তৈরি করে না, বরং আর্থিক চাপ বাড়ায়।"
-        }
-                  ]
-    }
-        
+        }]
+      }
     ];
 
     /* --- MAIN APP COMPONENT --- */
@@ -220,6 +220,14 @@
       const t = UI_TEXT[lang];
       const levelTopics = TOPICS.filter((tp) => tp.level === selectedLevel);
       const activeTopic = TOPICS.find((tp) => tp.id === selectedTopicId) || TOPICS[0];
+
+      const handleLevelChange = (lvlKey) => {
+        setSelectedLevel(lvlKey);
+        const firstTopic = TOPICS.find((tp) => tp.level === lvlKey);
+        if (firstTopic) {
+          setSelectedTopicId(firstTopic.id);
+        }
+      };
 
       return (
         <div className="min-h-screen bg-[#101B2E] text-[#F5F1E3] flex flex-col">
@@ -244,10 +252,31 @@
           </header>
 
           {/* CONTENT LAYOUT */}
-          <main className="max-w-6xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
+          <main className="max-w-6xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 w-full flex-grow">
             {/* SIDEBAR */}
             <aside className="md:col-span-4 bg-[#1B2A44] border border-[#2A3B5C] rounded-xl p-4 h-fit">
-              <div className="text-xs uppercase tracking-wider text-[#B98D3E] font-semibold mb-3">{t.selectTopic}</div>
+              {/* LEVEL SWITCHER */}
+              <div className="mb-4">
+                <div className="text-xs uppercase tracking-wider text-[#B98D3E] font-semibold mb-2">{t.selectLevel}</div>
+                <div className="grid grid-cols-3 gap-1 bg-[#101B2E] p-1 rounded-lg border border-[#2A3B5C]">
+                  {Object.keys(LEVEL_META).map((lvlKey) => (
+                    <button
+                      key={lvlKey}
+                      onClick={() => handleLevelChange(lvlKey)}
+                      className={`py-1.5 px-2 rounded text-xs font-semibold transition-all ${
+                        selectedLevel === lvlKey
+                          ? "bg-[#B98D3E] text-[#101B2E]"
+                          : "text-[#DCD0A6]/70 hover:text-white"
+                      }`}
+                    >
+                      {lang === "en" ? LEVEL_META[lvlKey].labelEn : LEVEL_META[lvlKey].labelBn}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* TOPIC LIST */}
+              <div className="text-xs uppercase tracking-wider text-[#B98D3E] font-semibold mb-2">{t.selectTopic}</div>
               <div className="space-y-2">
                 {levelTopics.map((tp) => (
                   <button
@@ -258,7 +287,7 @@
                     }`}
                   >
                     <span>{tp.num}. {lang === "en" ? tp.titleEn : tp.titleBn}</span>
-                    <IconChevronRight className="w-4 h-4 opacity-60" />
+                    <IconChevronRight className="w-4 h-4 opacity-60 shrink-0 ml-2" />
                   </button>
                 ))}
               </div>
@@ -270,7 +299,7 @@
               <div className="flex border-b border-[#2A3B5C] bg-[#1B2A44] rounded-t-xl overflow-hidden px-2 pt-2">
                 <button
                   onClick={() => setActiveTab("lessons")}
-                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 ${
+                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors ${
                     activeTab === "lessons" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
                   }`}
                 >
@@ -278,7 +307,7 @@
                 </button>
                 <button
                   onClick={() => setActiveTab("videos")}
-                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 ${
+                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors ${
                     activeTab === "videos" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
                   }`}
                 >
@@ -286,7 +315,7 @@
                 </button>
                 <button
                   onClick={() => setActiveTab("quiz")}
-                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 ${
+                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors ${
                     activeTab === "quiz" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
                   }`}
                 >
@@ -296,78 +325,6 @@
 
               {/* TAB 1: LESSONS */}
               {activeTab === "lessons" && (
-                <div className="bg-[#F5F1E3] text-[#101B2E] rounded-b-xl p-6 border border-[#DCD0A6]">
+                <div className="bg-[#F5F1E3] text-[#101B2E] rounded-b-xl p-6 border border-[#DCD0A6] shadow-md">
                   <h2 className="text-2xl font-bold mb-4">{lang === "en" ? activeTopic.titleEn : activeTopic.titleBn}</h2>
-                  <p className="text-base leading-relaxed mb-6">{lang === "en" ? activeTopic.introEn : activeTopic.introBn}</p>
-                  <div className="bg-[#ECE4C9] border-l-4 border-[#B98D3E] p-4 rounded-r mb-6">
-                    <h3 className="font-bold text-sm uppercase text-[#7A2A2E] mb-2">{t.keyTakeaways}</h3>
-                    <ul className="space-y-1 text-sm">
-                      {(lang === "en" ? activeTopic.keyPointsEn : activeTopic.keyPointsBn).map((pt, i) => (
-                        <li key={i}>• {pt}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="bg-[#101B2E] text-[#F5F1E3] p-4 rounded-lg">
-                    <h4 className="text-xs uppercase font-mono text-[#D9AE63] mb-1">{t.realExample}</h4>
-                    <p className="text-sm italic">"{lang === "en" ? activeTopic.exampleEn : activeTopic.exampleBn}"</p>
-                  </div>
-                </div>
-              )}
-
-              {/* TAB 2: VIDEOS */}
-              {activeTab === "videos" && (
-                <div className="bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6">
-                  <h3 className="text-xl text-[#D9AE63] mb-4">{lang === "en" ? activeTopic.titleEn : activeTopic.titleBn}</h3>
-                  <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black border border-[#2A3B5C]">
-                    <iframe
-                      className="w-full h-full border-0"
-                      src={`https://www.youtube.com/embed/${activeTopic.youtubeId}?rel=0`}
-                      title="Video Lesson"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-              )}
-
-              {/* TAB 3: QUIZ */}
-              {activeTab === "quiz" && (
-                <div className="bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6">
-                  {activeTopic.problems.map((prob, pIdx) => {
-                    const selectedOpt = selectedAnswers[pIdx];
-                    const isSubmitted = selectedOpt !== undefined;
-                    return (
-                      <div key={pIdx} className="space-y-4">
-                        <h3 className="text-lg font-semibold">{lang === "en" ? prob.qEn : prob.qBn}</h3>
-                        <div className="space-y-2">
-                          {(lang === "en" ? prob.optionsEn : prob.optionsBn).map((opt, oIdx) => (
-                            <button
-                              key={oIdx}
-                              disabled={isSubmitted}
-                              onClick={() => setSelectedAnswers({ ...selectedAnswers, [pIdx]: oIdx })}
-                              className={`w-full text-left p-3.5 rounded-lg border text-sm transition-all flex justify-between ${
-                                isSubmitted
-                                  ? oIdx === prob.correct ? "bg-emerald-950 border-emerald-500 text-emerald-200" : "bg-rose-950 border-rose-500 text-rose-200"
-                                  : "bg-[#101B2E] border-[#2A3B5C] text-[#DCD0A6]"
-                              }`}
-                            >
-                              <span>{opt}</span>
-                              {isSubmitted && oIdx === prob.correct && <IconCheckCircle2 className="w-5 h-5 text-emerald-400" />}
-                              {isSubmitted && selectedOpt === oIdx && oIdx !== prob.correct && <IconXCircle className="w-5 h-5 text-rose-400" />}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
-          </main>
-        </div>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
-</body>
-</html>
+                  <p cla
