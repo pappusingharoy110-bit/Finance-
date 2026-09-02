@@ -3,73 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ডিজিটাল খাতা | Digital Bahi-Khata</title>
-  <!-- Load React, ReactDOM, and Babel from CDN -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Tailwind CSS -->
+  <title>Own Finance</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#101B2E] text-[#F5F1E3] font-sans antialiased">
   <div id="root"></div>
 
-  <script type="text/babel">
+  <script>
+    const e = React.createElement;
     const { useState } = React;
 
-    /* --- INLINE SVG ICONS --- */
-    const IconGlobe = ({ className }) => (
-      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-    );
-    const IconBookOpen = ({ className }) => (
-      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-    );
-    const IconYoutube = ({ className }) => (
-      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
-    );
-    const IconSparkles = ({ className }) => (
-      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-    );
-    const IconChevronRight = ({ className }) => (
-      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-    );
-    const IconCheckCircle2 = ({ className }) => (
-      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-    );
-    const IconXCircle = ({ className }) => (
-      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-    );
-
-    /* --- APP DATA & TRANSLATIONS --- */
     const UI_TEXT = {
       en: {
-        appTitle: "Digital Bahi-Khata",
+        appTitle: "Own Finance",
         tagline: "Financial Literacy & Wealth Ledger",
         lessonsTab: "Lessons",
         videosTab: "Video Section",
         quizTab: "Practice & Quiz",
+        assistantTab: "Pappu AI",
         selectTopic: "Select a Topic",
         selectLevel: "Select Level",
         keyTakeaways: "Key Takeaways",
         realExample: "Practical Example",
-        correct: "Correct!",
-        incorrect: "Incorrect",
-        videoNotice: "Embedded Video Tutorial",
+        askPappu: "Ask Pappu AI",
+        askPlaceholder: "Ask a finance question...",
+        send: "Send",
         switchLang: "বাংলা",
       },
       bn: {
-        appTitle: "ডিজিটাল খাতা",
+        appTitle: "Own Finance",
         tagline: "আর্থিক সাক্ষরতা ও সম্পদ ব্যবস্থাপনা শিক্ষালয়",
         lessonsTab: "পাঠসমূহ",
         videosTab: "ভিডিও সেশন",
         quizTab: "অনুশীলনী ও কুইজ",
+        assistantTab: "পাপ্পু এআই",
         selectTopic: "বিষয় নির্বাচন করুন",
         selectLevel: "লেভেল নির্বাচন করুন",
         keyTakeaways: "মূল বিষয়বস্তু",
         realExample: "বাস্তব উদাহরণ",
-        correct: "সঠিক উত্তর!",
-        incorrect: "ভুল উত্তর",
-        videoNotice: "ভিডিও টিউটোরিয়াল সেশন",
+        askPappu: "পাপ্পু এআই-কে জিজ্ঞাসা করুন",
+        askPlaceholder: "আর্থিক প্রশ্ন লিখুন...",
+        send: "পাঠান",
         switchLang: "English",
       }
     };
@@ -82,12 +58,11 @@
 
     const TOPICS = [
       {
-        id: "basic-1", level: "basic", num: 1,
-        youtubeId: "3Ma38uI9O2s",
+        id: "basic-1", level: "basic", num: 1, youtubeId: "3Ma38uI9O2s",
         titleEn: "What Is Money, and Why Does It Have Value",
         titleBn: "অর্থ কী এবং এর মূল্যায়ন কীভাবে হয়?",
-        introEn: "Money works because a large group of people agree to trust it as a medium of exchange, a unit of account, and a store of value.",
-        introBn: "অর্থ তখনই কাজ করে যখন মানুষ এটিকে বিনিময়ের মাধ্যম এবং মূল্যের সঞ্চয় হিসেবে বিশ্বাস করে।",
+        introEn: "Money works because a large group of people agree to trust it as a medium of exchange.",
+        introBn: "অর্থ তখনই কাজ করে যখন মানুষ এটিকে বিনিময়ের মাধ্যম হিসেবে বিশ্বাস করে।",
         keyPointsEn: ["Medium of exchange", "Fiat currency backing", "Trust in government issuing"],
         keyPointsBn: ["লেনদেনের মাধ্যম", "সরকারি অনুমোদন (ফিয়াট মানি)", "ইস্যুকারী প্রতিষ্ঠানের প্রতি আস্থা"],
         exampleEn: "A ₹500 note is paper, but accepted because the Central Bank backs it.",
@@ -101,230 +76,156 @@
           explanationEn: "Fiat money gets value from trust and law.",
           explanationBn: "ফিয়াট মানির মূল্য আসে আইনি স্বীকৃতি ও জনআস্থা থেকে।"
         }]
-      },
-      {
-        id: "basic-2", level: "basic", num: 2,
-        youtubeId: "HQzoZfc3GwQ",
-        titleEn: "Income, Expenses, and Household Budgeting",
-        titleBn: "আয়, ব্যয় এবং পারিবারিক বাজেট পরিকল্পনা",
-        introEn: "A budget compares income against expenses to build long-term savings.",
-        introBn: "আয়ের সাথে ব্যয়ের সঠিক অনুপাত বজায় রাখাই বাজেট ব্যবস্থাপনার প্রথম ধাপ।",
-        keyPointsEn: ["Track fixed vs variable costs", "50/30/20 Budgeting Rule"],
-        keyPointsBn: ["নির্দিষ্ট ও আনুষঙ্গিক খরচ পৃথকীকরণ", "৫০/৩০/২০ বাজেটিং নিয়ম"],
-        exampleEn: "Save 20% of income directly into savings before spending on wants.",
-        exampleBn: "আয়ের ২০% শুরুতেই সঞ্চয় ফান্ডে জমা রেখে বাকি টাকা ব্যয় করুন।",
-        problems: [{
-          qEn: "Under 50/30/20 rule, what share goes to savings?",
-          qBn: "৫০/৩০/২০ নীতিতে সঞ্চয়ের ভাগ কত?",
-          optionsEn: ["50%", "30%", "20%", "10%"],
-          optionsBn: ["৫০%", "৩০%", "২০%", "১০%"],
-          correct: 2,
-          explanationEn: "20% is recommended for savings.",
-          explanationBn: "২০% অর্থ সঞ্চয় করা উচিত।"
-        }]
-      },
-      {
-        id: "basic-3", level: "basic", num: 3,
-        youtubeId: "WEDIj9JBTC8",
-        titleEn: "Power of Compound Interest",
-        titleBn: "চক্রবৃদ্ধি সুদের জাদু ও শক্তি",
-        introEn: "Compound interest is interest earned on top of earlier interest, allowing small savings to grow exponentially over time.",
-        introBn: "চক্রবৃদ্ধি সুদ হলো মূলধনের সাথে অর্জিত সুদের ওপর পুনরায় সুদ পাওয়া। এটি দীর্ঘমেয়াদে অল্প সঞ্চয়কেও অনেক বড় অঙ্কে পরিণত করে।",
-        keyPointsEn: ["Interest earns interest", "Time is more important than amount", "Start investing early"],
-        keyPointsBn: ["সুদের ওপরও সুদ অর্জিত হয়", "টাকার পরিমাণের চেয়ে সময়ের গুরুত্ব বেশি", "যত দ্রুত সম্ভব বিনিয়োগ শুরু করা উচিত"],
-        exampleEn: "Investing ₹1,000 monthly for 20 years yields much more than saving cash at home due to compounding.",
-        exampleBn: "প্রতি মাসে ১,০০০ টাকা করে ২০ বছর ধরে চক্রবৃদ্ধি সুদে বিনিয়োগ করলে তা সাধারণ সঞ্চয়ের চেয়ে বহুগুণ বেশি রিটার্ন দেয়।",
-        problems: [{
-          qEn: "What is compound interest?",
-          qBn: "চক্রবৃদ্ধি সুদ (Compound Interest) আসলে কী?",
-          optionsEn: ["Interest on original principal only", "Interest earned on principal plus accrued interest", "Fixed bonus from government", "Interest that decreases over time"],
-          optionsBn: ["শুধু মূল টাকার ওপর পাওয়া সুদ", "মূল টাকা এবং পূর্বে প্রাপ্ত সুদের ওপর বাড়তি সুদ", "সরকার থেকে প্রাপ্ত বোনাস", "সময়ের সাথে কমে যাওয়া সুদ"],
-          correct: 1,
-          explanationEn: "Compounding means earning interest on top of accumulated interest.",
-          explanationBn: "চক্রবৃদ্ধি প্রক্রিয়ায় মূলধনের পাশাপাশি জমাকৃত সুদের ওপরও নতুন সুদ যোগ হয়।"
-        }]
-      },
-      {
-        id: "int-1", level: "intermediate", num: 4,
-        youtubeId: "Xn7KewMRE70",
-        titleEn: "Basics of Stock Market",
-        titleBn: "শেয়ার বাজারের প্রাথমিক ধারণা",
-        introEn: "Buying a stock means owning a small piece of a public company and sharing in its growth or loss.",
-        introBn: "শেয়ার বাজার হলো এমন একটি জায়গা যেখানে কোনো কোম্পানির শেয়ার কিনে আপনি সেই কোম্পানির আংশিক মালিক হতে পারেন।",
-        keyPointsEn: ["Ownership in companies", "Capital appreciation and dividends", "Requires risk management"],
-        keyPointsBn: ["কোম্পানির আংশিক মালিকানা প্রাপ্তি", "লভ্যাংশ (Dividend) ও শেয়ারের দাম বৃদ্ধির সুযোগ", "সঠিক ঝুঁকি ব্যবস্থাপনার প্রয়োজন"],
-        exampleEn: "Buying 10 shares of a growing company allows you to profit if the company increases its earnings.",
-        exampleBn: "একটি লাভজনক কোম্পানির ১০টি শেয়ার কিনলে, কোম্পানি বড় হওয়ার সাথে সাথে আপনার বিনিয়োগের মানও বাড়ে।",
-        problems: [{
-          qEn: "What does buying a stock represent?",
-          qBn: "একটি কোম্পানির শেয়ার কেনার অর্থ কী?",
-          optionsEn: ["Lending money to bank", "Partial ownership in the company", "Buying government bonds", "Guaranteed daily return"],
-          optionsBn: ["ব্যাংককে টাকা ধার দেওয়া", "কোম্পানির একটি অংশ বা মালিকানা কেনা", "সরকারি বন্ড কেনা", "প্রতিদিনের নির্দিষ্ট লাভ পাওয়া"],
-          correct: 1,
-          explanationEn: "A stock represents equity ownership in a corporation.",
-          explanationBn: "শেয়ার কেনার মাধ্যমে আপনি ওই নির্দিষ্ট কোম্পানির নির্দিষ্ট পরিমাণের মালিকানা পান।"
-        }]
-      },
-      {
-        id: "adv-1", level: "advanced", num: 5,
-        youtubeId: "Y64InPylzE0",
-        titleEn: "Understanding Inflation",
-        titleBn: "মুদ্রাস্ফীতি (Inflation) ও আপনার টাকা",
-        introEn: "Inflation is the gradual decrease in the purchasing power of money over time, making goods more expensive.",
-        introBn: "মুদ্রাস্ফীতি হলো সময়ের সাথে সাথে পণ্য ও সেবার দাম বৃদ্ধি পাওয়া, যার ফলে টাকার আসল কেনাকাটার ক্ষমতা কমে যায়।",
-        keyPointsEn: ["Cash loses value over time", "Beating inflation requires investing", "Real returns matter"],
-        keyPointsBn: ["ঘরে নগদ টাকা ফেলে রাখলে তার মান কমে", "মুদ্রাস্ফীতিকে হারাতে বিনিয়োগ আবশ্যক", "প্রকৃত রিটার্ন (Real Return) হিসেব করা জরুরি"],
-        exampleEn: "If ₹100 buys 1kg of apples today, but ₹110 next year, inflation is 10%.",
-        exampleBn: "আজ ১০০ টাকায় ১ কেজি আপেল পাওয়া গেলে, আগামী বছর যদি তার দাম ১১০ টাকা হয়, তবে মুদ্রাস্ফীতি ১০%।",
-        problems: [{
-          qEn: "How does high inflation affect your savings stored in cash at home?",
-          qBn: "উচ্চ মুদ্রাস্ফীতি ঘরে রাখা নগদ সঞ্চয়ের ওপর কী প্রভাব ফেলে?",
-          optionsEn: ["Increases buying power", "Reduces purchasing power", "Has no effect", "Doubles the money"],
-          optionsBn: ["ক্রয়ক্ষমতা বাড়িয়ে দেয়", "ক্রয়ক্ষমতা কমিয়ে দেয়", "কোনো প্রভাব ফেলে না", "টাকা দ্বিগুণ করে দেয়"],
-          correct: 1,
-          explanationEn: "Inflation erodes the purchasing power of uninvested cash.",
-          explanationBn: "মুদ্রাস্ফীতির কারণে একই পরিমাণ টাকা দিয়ে ভবিষ্যতে কম জিনিস কেনা যায়।"
-        }]
-      },
-      {
-        id: "adv-2", level: "advanced", num: 6,
-        youtubeId: "J2p_L56y79k",
-        titleEn: "Good Debt vs Bad Debt",
-        titleBn: "ভালো ঋণ বনাম খারাপ ঋণের পার্থক্য",
-        introEn: "Good debt helps generate long-term wealth or income, while bad debt drains your money on depreciating assets.",
-        introBn: "ভালো ঋণ আপনার আয় বা সম্পদ বাড়াতে সাহায্য করে, আর খারাপ ঋণ আপনার পকেট থেকে টাকা খালি করে দেয়।",
-        keyPointsEn: ["Good debt: Home loan, Education loan", "Bad debt: High-interest Credit Card, personal loans", "Avoid debt traps"],
-        keyPointsBn: ["ভালো ঋণ: শিক্ষার জন্য লোন, ব্যাবসায়িক বিনিয়োগ", "খারাপ ঋণ: উচ্চ সুদের ক্রেডিট কার্ড বা অপ্রয়োজনীয় পার্সোনাল লোন", "ঋণের ফাঁদ এড়িয়ে চলুন"],
-        exampleEn: "Using a business loan to expand income is good debt; using high-interest loan for expensive gadgets is bad debt.",
-        exampleBn: "ব্যবসা বাড়ানোর লোন হলো ভালো ঋণ, কিন্তু বেশি সুদে নতুন দামি ফোন কেনার লোন হলো খারাপ ঋণ।",
-        problems: [{
-          qEn: "Which of the following is considered 'Bad Debt'?",
-          qBn: "নিচের কোনটি 'খারাপ ঋণ' হিসেবে গণ্য হয়?",
-          optionsEn: ["Student loan for career growth", "High-interest loan for luxury vacation", "Loan for expanding profitable business", "Home loan"],
-          optionsBn: ["পড়াশোনার জন্য এডুকেশন লোন", "বিলাসিতার জন্য নেওয়া উচ্চ সুদের ঋণ", "ব্যবসা বাড়ানোর জন্য লোন", "হোম লোন"],
-          correct: 1,
-          explanationEn: "Loans taken for non-essential luxuries with high interest rate harm financial growth.",
-          explanationBn: "উচ্চ সুদে বিলাসিতার জিনিস কেনার ঋণ কোনো আয় তৈরি করে না, বরং আর্থিক চাপ বাড়ায়।"
-        }]
       }
     ];
 
-    /* --- MAIN APP COMPONENT --- */
     function App() {
       const [lang, setLang] = useState("bn");
       const [activeTab, setActiveTab] = useState("lessons");
       const [selectedLevel, setSelectedLevel] = useState("basic");
       const [selectedTopicId, setSelectedTopicId] = useState("basic-1");
       const [selectedAnswers, setSelectedAnswers] = useState({});
+      const [chatMessages, setChatMessages] = useState([
+        { sender: "bot", textBn: "হ্যালো! আমি পাপ্পু এআই। অর্থ বা বাজেট নিয়ে যেকোনো প্রশ্ন করতে পারেন।", textEn: "Hello! I am Pappu AI. Ask me any finance or budgeting question." }
+      ]);
+      const [inputQuery, setInputQuery] = useState("");
 
       const t = UI_TEXT[lang];
       const levelTopics = TOPICS.filter((tp) => tp.level === selectedLevel);
       const activeTopic = TOPICS.find((tp) => tp.id === selectedTopicId) || TOPICS[0];
 
-      const handleLevelChange = (lvlKey) => {
-        setSelectedLevel(lvlKey);
-        const firstTopic = TOPICS.find((tp) => tp.level === lvlKey);
-        if (firstTopic) {
-          setSelectedTopicId(firstTopic.id);
-        }
+      const handleSend = () => {
+        if (!inputQuery.trim()) return;
+        const userText = inputQuery;
+        setChatMessages((prev) => [...prev, { sender: "user", textBn: userText, textEn: userText }]);
+        setInputQuery("");
+
+        setTimeout(() => {
+          setChatMessages((prev) => [
+            ...prev,
+            {
+              sender: "bot",
+              textBn: "আপনার প্রশ্নের জন্য ধন্যবাদ! নিয়মিত সঞ্চয় করুন এবং ৫০/৩০/২০ বাজেটিং নিয়ম অনুসরণ করুন।",
+              textEn: "Thank you for asking! Remember to save regularly and follow the 50/30/20 budgeting rule."
+            }
+          ]);
+        }, 600);
       };
 
-      return (
-        <div className="min-h-screen bg-[#101B2E] text-[#F5F1E3] flex flex-col">
-          {/* HEADER */}
-          <header className="border-b border-[#B98D3E]/30 bg-[#101B2E] sticky top-0 z-50 px-4 py-3 shadow-md">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="bg-[#B98D3E] text-[#101B2E] px-3 py-1 rounded font-bold text-xl">খাতা</div>
-                <div>
-                  <h1 className="text-xl font-bold text-[#D9AE63]">{t.appTitle}</h1>
-                  <p className="text-xs text-[#DCD0A6]/70 hidden sm:block">{t.tagline}</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setLang(lang === "en" ? "bn" : "en")}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#B98D3E] text-[#D9AE63] hover:bg-[#B98D3E]/10 transition-colors text-sm font-semibold"
-              >
-                <IconGlobe className="w-4 h-4" />
-                <span>{t.switchLang}</span>
-              </button>
-            </div>
-          </header>
+      return e("div", { className: "min-h-screen bg-[#101B2E] text-[#F5F1E3] flex flex-col justify-between" },
+        e("div", null,
+          e("header", { className: "border-b border-[#B98D3E]/30 bg-[#101B2E] sticky top-0 z-50 px-4 py-3 shadow-md" },
+            e("div", { className: "max-w-6xl mx-auto flex justify-between items-center" },
+              e("div", { className: "flex items-center gap-3" },
+                e("div", { className: "bg-[#B98D3E] text-[#101B2E] px-3 py-1 rounded font-bold text-xl" }, "OF"),
+                e("div", null,
+                  e("h1", { className: "text-xl font-bold text-[#D9AE63]" }, t.appTitle),
+                  e("p", { className: "text-xs text-[#DCD0A6]/70 hidden sm:block" }, t.tagline)
+                )
+              ),
+              e("button", {
+                onClick: () => setLang(lang === "en" ? "bn" : "en"),
+                className: "px-3 py-1.5 rounded-full border border-[#B98D3E] text-[#D9AE63] hover:bg-[#B98D3E]/10 text-sm font-semibold"
+              }, t.switchLang)
+            )
+          ),
+          e("main", { className: "max-w-6xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 w-full flex-grow" },
+            e("aside", { className: "md:col-span-4 bg-[#1B2A44] border border-[#2A3B5C] rounded-xl p-4 h-fit" },
+              e("div", { className: "mb-4" },
+                e("div", { className: "text-xs uppercase text-[#B98D3E] font-semibold mb-2" }, t.selectLevel),
+                e("div", { className: "grid grid-cols-3 gap-1 bg-[#101B2E] p-1 rounded-lg border border-[#2A3B5C]" },
+                  Object.keys(LEVEL_META).map((lvlKey) =>
+                    e("button", {
+                      key: lvlKey,
+                      onClick: () => {
+                        setSelectedLevel(lvlKey);
+                        const first = TOPICS.find((t) => t.level === lvlKey);
+                        if (first) setSelectedTopicId(first.id);
+                      },
+                      className: `py-1.5 px-2 rounded text-xs font-semibold ${selectedLevel === lvlKey ? "bg-[#B98D3E] text-[#101B2E]" : "text-[#DCD0A6]/70"}`
+                    }, lang === "en" ? LEVEL_META[lvlKey].labelEn : LEVEL_META[lvlKey].labelBn)
+                  )
+                )
+              ),
+              e("div", { className: "text-xs uppercase text-[#B98D3E] font-semibold mb-2" }, t.selectTopic),
+              e("div", { className: "space-y-2" },
+                levelTopics.map((tp) =>
+                  e("button", {
+                    key: tp.id,
+                    onClick: () => setSelectedTopicId(tp.id),
+                    className: `w-full text-left p-3 rounded-lg border text-sm transition-all ${tp.id === selectedTopicId ? "bg-[#2F5D50]/40 border-[#3F7A69] text-white" : "bg-[#101B2E]/50 border-[#2A3B5C] text-[#DCD0A6]"}`
+                  }, `${tp.num}. ${lang === "en" ? tp.titleEn : tp.titleBn}`)
+                )
+              )
+            ),
+            e("section", { className: "md:col-span-8 flex flex-col gap-4" },
+              e("div", { className: "flex border-b border-[#2A3B5C] bg-[#1B2A44] rounded-t-xl px-2 pt-2 gap-1 overflow-x-auto" },
+                ["lessons", "videos", "quiz", "assistant"].map((tab) =>
+                  e("button", {
+                    key: tab,
+                    onClick: () => setActiveTab(tab),
+                    className: `px-4 py-2.5 text-sm font-semibold border-b-2 whitespace-nowrap ${activeTab === tab ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"}`
+                  }, t[`${tab}Tab`])
+                )
+              ),
+              activeTab === "lessons" && e("div", { className: "bg-[#F5F1E3] text-[#101B2E] rounded-b-xl p-6 shadow-md" },
+                e("h2", { className: "text-2xl font-bold mb-4" }, lang === "en" ? activeTopic.titleEn : activeTopic.titleBn),
+                e("p", { className: "text-base mb-6" }, lang === "en" ? activeTopic.introEn : activeTopic.introBn),
+                e("div", { className: "bg-[#ECE4C9] border-l-4 border-[#B98D3E] p-4 rounded-r mb-6" },
+                  e("h3", { className: "font-bold text-sm uppercase text-[#7A2A2E] mb-2" }, t.keyTakeaways),
+                  e("ul", { className: "space-y-1 text-sm" },
+                    (lang === "en" ? activeTopic.keyPointsEn : activeTopic.keyPointsBn).map((pt, i) => e("li", { key: i }, `• ${pt}`))
+                  )
+                ),
+                e("div", { className: "bg-[#101B2E] text-[#F5F1E3] p-4 rounded-lg" },
+                  e("h4", { className: "text-xs font-mono text-[#D9AE63] mb-1" }, t.realExample),
+                  e("p", { className: "text-sm italic" }, `"${lang === "en" ? activeTopic.exampleEn : activeTopic.exampleBn}"`)
+                )
+              ),
+              activeTab === "assistant" && e("div", { className: "bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6 space-y-4 flex flex-col h-[420px] justify-between" },
+                e("div", { className: "border-b border-[#2A3B5C] pb-3" },
+                  e("h3", { className: "text-lg font-bold text-[#D9AE63]" }, t.askPappu)
+                ),
+                e("div", { className: "overflow-y-auto space-y-3 flex-grow pr-1" },
+                  chatMessages.map((msg, idx) =>
+                    e("div", {
+                      key: idx,
+                      className: `max-w-[80%] p-3 rounded-lg text-sm ${
+                        msg.sender === "user"
+                          ? "ml-auto bg-[#B98D3E] text-[#101B2E] font-medium"
+                          : "bg-[#101B2E] text-[#F5F1E3] border border-[#2A3B5C]"
+                      }`
+                    }, lang === "en" ? msg.textEn : msg.textBn)
+                  )
+                ),
+                e("div", { className: "flex gap-2 pt-2 border-t border-[#2A3B5C]" },
+                  e("input", {
+                    type: "text",
+                    value: inputQuery,
+                    onChange: (evt) => setInputQuery(evt.target.value),
+                    onKeyDown: (evt) => evt.key === "Enter" && handleSend(),
+                    placeholder: t.askPlaceholder,
+                    className: "flex-grow bg-[#101B2E] border border-[#2A3B5C] rounded-lg px-3 py-2 text-sm text-[#F5F1E3] focus:outline-none focus:border-[#B98D3E]"
+                  }),
+                  e("button", {
+                    onClick: handleSend,
+                    className: "bg-[#B98D3E] text-[#101B2E] font-semibold px-4 py-2 rounded-lg text-sm"
+                  }, t.send)
+                )
+              )
+            )
+          )
+        ),
+        e("footer", { className: "border-t border-[#2A3B5C]/60 bg-[#0B1321] py-6 text-center mt-12" },
+          e("p", { className: "text-sm font-semibold text-[#D9AE63]" }, "Made by Pappu Singha Roy"),
+          e("p", { className: "text-xs text-[#DCD0A6]/60 mt-1" }, "The part of edu-art-group")
+        )
+      );
+    }
 
-          {/* CONTENT LAYOUT */}
-          <main className="max-w-6xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 w-full flex-grow">
-            {/* SIDEBAR */}
-            <aside className="md:col-span-4 bg-[#1B2A44] border border-[#2A3B5C] rounded-xl p-4 h-fit">
-              {/* LEVEL SWITCHER */}
-              <div className="mb-4">
-                <div className="text-xs uppercase tracking-wider text-[#B98D3E] font-semibold mb-2">{t.selectLevel}</div>
-                <div className="grid grid-cols-3 gap-1 bg-[#101B2E] p-1 rounded-lg border border-[#2A3B5C]">
-                  {Object.keys(LEVEL_META).map((lvlKey) => (
-                    <button
-                      key={lvlKey}
-                      onClick={() => handleLevelChange(lvlKey)}
-                      className={`py-1.5 px-2 rounded text-xs font-semibold transition-all ${
-                        selectedLevel === lvlKey
-                          ? "bg-[#B98D3E] text-[#101B2E]"
-                          : "text-[#DCD0A6]/70 hover:text-white"
-                      }`}
-                    >
-                      {lang === "en" ? LEVEL_META[lvlKey].labelEn : LEVEL_META[lvlKey].labelBn}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* TOPIC LIST */}
-              <div className="text-xs uppercase tracking-wider text-[#B98D3E] font-semibold mb-2">{t.selectTopic}</div>
-              <div className="space-y-2">
-                {levelTopics.map((tp) => (
-                  <button
-                    key={tp.id}
-                    onClick={() => setSelectedTopicId(tp.id)}
-                    className={`w-full text-left p-3 rounded-lg border text-sm transition-all flex items-center justify-between ${
-                      tp.id === selectedTopicId ? "bg-[#2F5D50]/40 border-[#3F7A69] text-white" : "bg-[#101B2E]/50 border-[#2A3B5C] text-[#DCD0A6]"
-                    }`}
-                  >
-                    <span>{tp.num}. {lang === "en" ? tp.titleEn : tp.titleBn}</span>
-                    <IconChevronRight className="w-4 h-4 opacity-60 shrink-0 ml-2" />
-                  </button>
-                ))}
-              </div>
-            </aside>
-
-            {/* MAIN PANEL */}
-            <section className="md:col-span-8 flex flex-col gap-4">
-              {/* TABS */}
-              <div className="flex border-b border-[#2A3B5C] bg-[#1B2A44] rounded-t-xl overflow-hidden px-2 pt-2">
-                <button
-                  onClick={() => setActiveTab("lessons")}
-                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors ${
-                    activeTab === "lessons" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
-                  }`}
-                >
-                  <IconBookOpen className="w-4 h-4" /> {t.lessonsTab}
-                </button>
-                <button
-                  onClick={() => setActiveTab("videos")}
-                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors ${
-                    activeTab === "videos" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
-                  }`}
-                >
-                  <IconYoutube className="w-4 h-4 text-red-400" /> {t.videosTab}
-                </button>
-                <button
-                  onClick={() => setActiveTab("quiz")}
-                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors ${
-                    activeTab === "quiz" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
-                  }`}
-                >
-                  <IconSparkles className="w-4 h-4 text-amber-400" /> {t.quizTab}
-                </button>
-              </div>
-
-              {/* TAB 1: LESSONS */}
-              {activeTab === "lessons" && (
-                <div className="bg-[#F5F1E3] text-[#101B2E] rounded-b-xl p-6 border border-[#DCD0A6] shadow-md">
-                  <h2 className="text-2xl font-bold mb-4">{lang === "en" ? activeTopic.titleEn : activeTopic.titleBn}</h2>
-                  <p cla
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(e(App));
+  </script>
+</body>
+  </html>
+  
