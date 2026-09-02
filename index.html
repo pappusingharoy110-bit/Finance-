@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ডিজিটাল খাতা | Digital Bahi-Khata</title>
+  <!-- Load React, ReactDOM, and Babel from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#101B2E] text-[#F5F1E3] font-sans antialiased">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    /* --- INLINE SVG ICONS --- */
+    const IconGlobe = ({ className }) => (
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+    );
+    const IconBookOpen = ({ className }) => (
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    );
+    const IconYoutube = ({ className }) => (
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+    );
+    const IconSparkles = ({ className }) => (
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+    );
+    const IconChevronRight = ({ className }) => (
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    );
+    const IconCheckCircle2 = ({ className }) => (
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+    );
+    const IconXCircle = ({ className }) => (
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+    );
+
+    /* --- APP DATA & TRANSLATIONS --- */
+    const UI_TEXT = {
+      en: {
+        appTitle: "Digital Bahi-Khata",
+        tagline: "Financial Literacy & Wealth Ledger",
+        lessonsTab: "Lessons",
+        videosTab: "Video Section",
+        quizTab: "Practice & Quiz",
+        selectTopic: "Select a Topic",
+        keyTakeaways: "Key Takeaways",
+        realExample: "Practical Example",
+        correct: "Correct!",
+        incorrect: "Incorrect",
+        videoNotice: "Embedded Video Tutorials",
+        switchLang: "বাংলা",
+      },
+      bn: {
+        appTitle: "ডিজিটাল খাতা",
+        tagline: "আর্থিক সাক্ষরতা ও সম্পদ ব্যবস্থাপনা শিক্ষালয়",
+        lessonsTab: "পাঠসমূহ",
+        videosTab: "ভিডিও সেশন",
+        quizTab: "অনুশীলনী ও কুইজ",
+        selectTopic: "বিষয় নির্বাচন করুন",
+        keyTakeaways: "মূল বিষয়বস্তু",
+        realExample: "বাস্তব উদাহরণ",
+        correct: "সঠিক উত্তর!",
+        incorrect: "ভুল উত্তর",
+        videoNotice: "ভিডিও টিউটোরিয়াল সেশন",
+        switchLang: "English",
+      }
+    };
+
+    const LEVEL_META = {
+      basic: { labelEn: "Basic", labelBn: "প্রাথমিক" },
+      intermediate: { labelEn: "Intermediate", labelBn: "মধ্যবর্তী" },
+      advanced: { labelEn: "Advanced", labelBn: "উচ্চতর" },
+    };
+
+    const TOPICS = [
+      {
+        id: "basic-1", level: "basic", num: 1,
+        youtubeId: "3Ma38uI9O2s",
+        titleEn: "What Is Money, and Why Does It Have Value",
+        titleBn: "অর্থ কী এবং এর মূল্যায়ন কীভাবে হয়?",
+        introEn: "Money works because a large group of people agree to trust it as a medium of exchange, a unit of account, and a store of value.",
+        introBn: "অর্থ তখনই কাজ করে যখন মানুষ এটিকে বিনিময়ের মাধ্যম এবং মূল্যের সঞ্চয় হিসেবে বিশ্বাস করে।",
+        keyPointsEn: ["Medium of exchange", "Fiat currency backing", "Trust in government issuing"],
+        keyPointsBn: ["লেনদেনের মাধ্যম", "সরকারি অনুমোদন (ফিয়াট মানি)", "ইস্যুকারী প্রতিষ্ঠানের প্রতি আস্থা"],
+        exampleEn: "A ₹500 note is paper, but accepted because the Central Bank backs it.",
+        exampleBn: "পাঁচশত টাকার নোট একখণ্ড কাগজ হলেও কেন্দ্রীয় ব্যাংকের গ্যারান্টিতে সবাই গ্রহণ করে।",
+        problems: [{
+          qEn: "Why does fiat currency have value?",
+          qBn: "ফিয়াট কারেন্সির মূল্যের ভিত্তি কী?",
+          optionsEn: ["Made of gold", "Government backing & trust", "Convertible to silver", "No value"],
+          optionsBn: ["স্বর্ণ দিয়ে তৈরি", "সরকারি নিশ্চয়তা ও জনগণের আস্থা", "রুপার সমান মান", "কোনো মূল্য নেই"],
+          correct: 1,
+          explanationEn: "Fiat money gets value from trust and law.",
+          explanationBn: "ফিয়াট মানির মূল্য আসে আইনি স্বীকৃতি ও জনআস্থা থেকে।"
+        }]
+      },
+      {
+        id: "basic-2", level: "basic", num: 2,
+        youtubeId: "HQzoZfc3GwQ",
+        titleEn: "Income, Expenses, and Household Budgeting",
+        titleBn: "আয়, ব্যয় এবং পারিবারিক বাজেট পরিকল্পনা",
+        introEn: "A budget compares income against expenses to build long-term savings.",
+        introBn: "আয়ের সাথে ব্যয়ের সঠিক অনুপাত বজায় রাখাই বাজেট ব্যবস্থাপনার প্রথম ধাপ।",
+        keyPointsEn: ["Track fixed vs variable costs", "50/30/20 Budgeting Rule"],
+        keyPointsBn: ["নির্দিষ্ট ও আনুষঙ্গিক খরচ পৃথকীকরণ", "৫০/৩০/২০ বাজেটিং নিয়ম"],
+        exampleEn: "Save 20% of income directly into savings before spending on wants.",
+        exampleBn: "আয়ের ২০% শুরুতেই সঞ্চয় ফান্ডে জমা রেখে বাকি টাকা ব্যয় করুন।",
+        problems: [{
+          qEn: "Under 50/30/20 rule, what share goes to savings?",
+          qBn: "৫০/৩০/২০ নীতিতে সঞ্চয়ের ভাগ কত?",
+          optionsEn: ["50%", "30%", "20%", "10%"],
+          optionsBn: ["৫০%", "৩০%", "২০%", "১০%"],
+          correct: 2,
+          explanationEn: "20% is recommended for savings.",
+          explanationBn: "২০% অর্থ সঞ্চয় করা উচিত।"
+        }]
+      },
+      {
+        id: "basic-3", level: "basic", num: 3,
+        youtubeId: "WEDIj9JBTC8",
+        titleEn: "Power of Compound Interest",
+        titleBn: "চক্রবৃদ্ধি সুদের জাদু ও শক্তি",
+        introEn: "Compound interest is interest earned on top of earlier interest, allowing small savings to grow exponentially over time.",
+        introBn: "চক্রবৃদ্ধি সুদ হলো মূলধনের সাথে অর্জিত সুদের ওপর পুনরায় সুদ পাওয়া। এটি দীর্ঘমেয়াদে অল্প সঞ্চয়কেও অনেক বড় অঙ্কে পরিণত করে।",
+        keyPointsEn: ["Interest earns interest", "Time is more important than amount", "Start investing early"],
+        keyPointsBn: ["সুদের ওপরও সুদ অর্জিত হয়", "টাকার পরিমাণের চেয়ে সময়ের গুরুত্ব বেশি", "যত দ্রুত সম্ভব বিনিয়োগ শুরু করা উচিত"],
+        exampleEn: "Investing ₹1,000 monthly for 20 years yields much more than saving cash at home due to compounding.",
+        exampleBn: "প্রতি মাসে ১,০০০ টাকা করে ২০ বছর ধরে চক্রবৃদ্ধি সুদে বিনিয়োগ করলে তা সাধারণ সঞ্চয়ের চেয়ে বহুগুণ বেশি রিটার্ন দেয়।",
+        problems: [{
+          qEn: "What is compound interest?",
+          qBn: "চক্রবৃদ্ধি সুদ (Compound Interest) আসলে কী?",
+          optionsEn: ["Interest on original principal only", "Interest earned on principal plus accrued interest", "Fixed bonus from government", "Interest that decreases over time"],
+          optionsBn: ["শুধু মূল টাকার ওপর পাওয়া সুদ", "মূল টাকা এবং পূর্বে প্রাপ্ত সুদের ওপর বাড়তি সুদ", "সরকার থেকে প্রাপ্ত বোনাস", "সময়ের সাথে কমে যাওয়া সুদ"],
+          correct: 1,
+          explanationEn: "Compounding means earning interest on top of accumulated interest.",
+          explanationBn: "চক্রবৃদ্ধি প্রক্রিয়ায় মূলধনের পাশাপাশি জমাকৃত সুদের ওপরও নতুন সুদ যোগ হয়।"
+        }]
+      }
+    ];
+
+    /* --- MAIN APP COMPONENT --- */
+    function App() {
+      const [lang, setLang] = useState("bn");
+      const [activeTab, setActiveTab] = useState("lessons");
+      const [selectedLevel, setSelectedLevel] = useState("basic");
+      const [selectedTopicId, setSelectedTopicId] = useState("basic-1");
+      const [selectedAnswers, setSelectedAnswers] = useState({});
+
+      const t = UI_TEXT[lang];
+      const levelTopics = TOPICS.filter((tp) => tp.level === selectedLevel);
+      const activeTopic = TOPICS.find((tp) => tp.id === selectedTopicId) || TOPICS[0];
+
+      return (
+        <div className="min-h-screen bg-[#101B2E] text-[#F5F1E3] flex flex-col">
+          {/* HEADER */}
+          <header className="border-b border-[#B98D3E]/30 bg-[#101B2E] sticky top-0 z-50 px-4 py-3 shadow-md">
+            <div className="max-w-6xl mx-auto flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="bg-[#B98D3E] text-[#101B2E] px-3 py-1 rounded font-bold text-xl">খাতা</div>
+                <div>
+                  <h1 className="text-xl font-bold text-[#D9AE63]">{t.appTitle}</h1>
+                  <p className="text-xs text-[#DCD0A6]/70 hidden sm:block">{t.tagline}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setLang(lang === "en" ? "bn" : "en")}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#B98D3E] text-[#D9AE63] hover:bg-[#B98D3E]/10 transition-colors text-sm font-semibold"
+              >
+                <IconGlobe className="w-4 h-4" />
+                <span>{t.switchLang}</span>
+              </button>
+            </div>
+          </header>
+
+          {/* CONTENT LAYOUT */}
+          <main className="max-w-6xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
+            {/* SIDEBAR */}
+            <aside className="md:col-span-4 bg-[#1B2A44] border border-[#2A3B5C] rounded-xl p-4 h-fit">
+              <div className="text-xs uppercase tracking-wider text-[#B98D3E] font-semibold mb-3">{t.selectTopic}</div>
+              <div className="space-y-2">
+                {levelTopics.map((tp) => (
+                  <button
+                    key={tp.id}
+                    onClick={() => setSelectedTopicId(tp.id)}
+                    className={`w-full text-left p-3 rounded-lg border text-sm transition-all flex items-center justify-between ${
+                      tp.id === selectedTopicId ? "bg-[#2F5D50]/40 border-[#3F7A69] text-white" : "bg-[#101B2E]/50 border-[#2A3B5C] text-[#DCD0A6]"
+                    }`}
+                  >
+                    <span>{tp.num}. {lang === "en" ? tp.titleEn : tp.titleBn}</span>
+                    <IconChevronRight className="w-4 h-4 opacity-60" />
+                  </button>
+                ))}
+              </div>
+            </aside>
+
+            {/* MAIN PANEL */}
+            <section className="md:col-span-8 flex flex-col gap-4">
+              {/* TABS */}
+              <div className="flex border-b border-[#2A3B5C] bg-[#1B2A44] rounded-t-xl overflow-hidden px-2 pt-2">
+                <button
+                  onClick={() => setActiveTab("lessons")}
+                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 ${
+                    activeTab === "lessons" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
+                  }`}
+                >
+                  <IconBookOpen className="w-4 h-4" /> {t.lessonsTab}
+                </button>
+                <button
+                  onClick={() => setActiveTab("videos")}
+                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 ${
+                    activeTab === "videos" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
+                  }`}
+                >
+                  <IconYoutube className="w-4 h-4 text-red-400" /> {t.videosTab}
+                </button>
+                <button
+                  onClick={() => setActiveTab("quiz")}
+                  className={`px-4 py-2.5 text-sm font-semibold flex items-center gap-2 border-b-2 ${
+                    activeTab === "quiz" ? "border-[#B98D3E] text-[#D9AE63]" : "border-transparent text-[#DCD0A6]/70"
+                  }`}
+                >
+                  <IconSparkles className="w-4 h-4 text-amber-400" /> {t.quizTab}
+                </button>
+              </div>
+
+              {/* TAB 1: LESSONS */}
+              {activeTab === "lessons" && (
+                <div className="bg-[#F5F1E3] text-[#101B2E] rounded-b-xl p-6 border border-[#DCD0A6]">
+                  <h2 className="text-2xl font-bold mb-4">{lang === "en" ? activeTopic.titleEn : activeTopic.titleBn}</h2>
+                  <p className="text-base leading-relaxed mb-6">{lang === "en" ? activeTopic.introEn : activeTopic.introBn}</p>
+                  <div className="bg-[#ECE4C9] border-l-4 border-[#B98D3E] p-4 rounded-r mb-6">
+                    <h3 className="font-bold text-sm uppercase text-[#7A2A2E] mb-2">{t.keyTakeaways}</h3>
+                    <ul className="space-y-1 text-sm">
+                      {(lang === "en" ? activeTopic.keyPointsEn : activeTopic.keyPointsBn).map((pt, i) => (
+                        <li key={i}>• {pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="bg-[#101B2E] text-[#F5F1E3] p-4 rounded-lg">
+                    <h4 className="text-xs uppercase font-mono text-[#D9AE63] mb-1">{t.realExample}</h4>
+                    <p className="text-sm italic">"{lang === "en" ? activeTopic.exampleEn : activeTopic.exampleBn}"</p>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 2: VIDEOS */}
+              {activeTab === "videos" && (
+                <div className="bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6">
+                  <h3 className="text-xl text-[#D9AE63] mb-4">{lang === "en" ? activeTopic.titleEn : activeTopic.titleBn}</h3>
+                  <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black border border-[#2A3B5C]">
+                    <iframe
+                      className="w-full h-full border-0"
+                      src={`https://www.youtube.com/embed/${activeTopic.youtubeId}?rel=0`}
+                      title="Video Lesson"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: QUIZ */}
+              {activeTab === "quiz" && (
+                <div className="bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6">
+                  {activeTopic.problems.map((prob, pIdx) => {
+                    const selectedOpt = selectedAnswers[pIdx];
+                    const isSubmitted = selectedOpt !== undefined;
+                    return (
+                      <div key={pIdx} className="space-y-4">
+                        <h3 className="text-lg font-semibold">{lang === "en" ? prob.qEn : prob.qBn}</h3>
+                        <div className="space-y-2">
+                          {(lang === "en" ? prob.optionsEn : prob.optionsBn).map((opt, oIdx) => (
+                            <button
+                              key={oIdx}
+                              disabled={isSubmitted}
+                              onClick={() => setSelectedAnswers({ ...selectedAnswers, [pIdx]: oIdx })}
+                              className={`w-full text-left p-3.5 rounded-lg border text-sm transition-all flex justify-between ${
+                                isSubmitted
+                                  ? oIdx === prob.correct ? "bg-emerald-950 border-emerald-500 text-emerald-200" : "bg-rose-950 border-rose-500 text-rose-200"
+                                  : "bg-[#101B2E] border-[#2A3B5C] text-[#DCD0A6]"
+                              }`}
+                            >
+                              <span>{opt}</span>
+                              {isSubmitted && oIdx === prob.correct && <IconCheckCircle2 className="w-5 h-5 text-emerald-400" />}
+                              {isSubmitted && selectedOpt === oIdx && oIdx !== prob.correct && <IconXCircle className="w-5 h-5 text-rose-400" />}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+          </main>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
