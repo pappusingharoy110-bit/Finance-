@@ -8,7 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#101B2E] text-[#F5F1E3] font-sans antialiased">
+<body class="bg-[#101B2E] text-[#F5F1E3] font-sans antialiased min-h-screen">
   <div id="root"></div>
 
   <script>
@@ -76,6 +76,26 @@
           explanationEn: "Fiat money gets value from trust and law.",
           explanationBn: "ফিয়াট মানির মূল্য আসে আইনি স্বীকৃতি ও জনআস্থা থেকে।"
         }]
+      },
+      {
+        id: "basic-2", level: "basic", num: 2, youtubeId: "HQzoZfc3GwQ",
+        titleEn: "Income, Expenses, and Household Budgeting",
+        titleBn: "আয়, ব্যয় এবং পারিবারিক বাজেট পরিকল্পনা",
+        introEn: "A budget compares income against expenses to build long-term savings.",
+        introBn: "আয়ের সাথে ব্যয়ের সঠিক অনুপাত বজায় রাখাই বাজেট ব্যবস্থাপনার প্রথম ধাপ।",
+        keyPointsEn: ["Track fixed vs variable costs", "50/30/20 Budgeting Rule"],
+        keyPointsBn: ["নির্দিষ্ট ও আনুষঙ্গিক খরচ পৃথকীকরণ", "৫০/৩০/২০ বাজেটিং নিয়ম"],
+        exampleEn: "Save 20% of income directly into savings before spending on wants.",
+        exampleBn: "আয়ের ২০% শুরুতেই সঞ্চয় ফান্ডে জমা রেখে বাকি টাকা ব্যয় করুন।",
+        problems: [{
+          qEn: "Under 50/30/20 rule, what share goes to savings?",
+          qBn: "৫০/৩০/২০ নীতিতে সঞ্চয়ের ভাগ কত?",
+          optionsEn: ["50%", "30%", "20%", "10%"],
+          optionsBn: ["৫০%", "৩০%", "২০%", "১০%"],
+          correct: 2,
+          explanationEn: "20% is recommended for savings.",
+          explanationBn: "২০% অর্থ সঞ্চয় করা উচিত।"
+        }]
       }
     ];
 
@@ -114,6 +134,7 @@
 
       return e("div", { className: "min-h-screen bg-[#101B2E] text-[#F5F1E3] flex flex-col justify-between" },
         e("div", null,
+          // HEADER
           e("header", { className: "border-b border-[#B98D3E]/30 bg-[#101B2E] sticky top-0 z-50 px-4 py-3 shadow-md" },
             e("div", { className: "max-w-6xl mx-auto flex justify-between items-center" },
               e("div", { className: "flex items-center gap-3" },
@@ -129,7 +150,9 @@
               }, t.switchLang)
             )
           ),
+          // MAIN CONTENT
           e("main", { className: "max-w-6xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 w-full flex-grow" },
+            // SIDEBAR
             e("aside", { className: "md:col-span-4 bg-[#1B2A44] border border-[#2A3B5C] rounded-xl p-4 h-fit" },
               e("div", { className: "mb-4" },
                 e("div", { className: "text-xs uppercase text-[#B98D3E] font-semibold mb-2" }, t.selectLevel),
@@ -158,6 +181,7 @@
                 )
               )
             ),
+            // SECTION TABS
             e("section", { className: "md:col-span-8 flex flex-col gap-4" },
               e("div", { className: "flex border-b border-[#2A3B5C] bg-[#1B2A44] rounded-t-xl px-2 pt-2 gap-1 overflow-x-auto" },
                 ["lessons", "videos", "quiz", "assistant"].map((tab) =>
@@ -168,6 +192,8 @@
                   }, t[`${tab}Tab`])
                 )
               ),
+
+              // TAB 1: LESSONS
               activeTab === "lessons" && e("div", { className: "bg-[#F5F1E3] text-[#101B2E] rounded-b-xl p-6 shadow-md" },
                 e("h2", { className: "text-2xl font-bold mb-4" }, lang === "en" ? activeTopic.titleEn : activeTopic.titleBn),
                 e("p", { className: "text-base mb-6" }, lang === "en" ? activeTopic.introEn : activeTopic.introBn),
@@ -182,7 +208,54 @@
                   e("p", { className: "text-sm italic" }, `"${lang === "en" ? activeTopic.exampleEn : activeTopic.exampleBn}"`)
                 )
               ),
-              activeTab === "assistant" && e("div", { className: "bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6 space-y-4 flex flex-col h-[420px] justify-between" },
+
+              // TAB 2: VIDEO SECTION
+              activeTab === "videos" && e("div", { className: "bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6" },
+                e("h3", { className: "text-xl font-bold text-[#D9AE63] mb-4" }, lang === "en" ? activeTopic.titleEn : activeTopic.titleBn),
+                e("div", { className: "relative w-full aspect-video rounded-xl overflow-hidden bg-black border border-[#2A3B5C]" },
+                  e("iframe", {
+                    className: "w-full h-full",
+                    src: `https://www.youtube-nocookie.com/embed/${activeTopic.youtubeId}`,
+                    title: "Video Lesson",
+                    allowFullScreen: true
+                  })
+                )
+              ),
+
+              // TAB 3: PRACTICE & QUIZ
+              activeTab === "quiz" && e("div", { className: "bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6 space-y-4" },
+                activeTopic.problems.map((prob, pIdx) => {
+                  const selectedOpt = selectedAnswers[activeTopic.id];
+                  const isAnswered = selectedOpt !== undefined;
+                  return e("div", { key: pIdx, className: "bg-[#101B2E] p-5 rounded-xl border border-[#2A3B5C] space-y-4" },
+                    e("p", { className: "font-semibold text-lg" }, `${pIdx + 1}. ${lang === "en" ? prob.qEn : prob.qBn}`),
+                    e("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-3" },
+                      (lang === "en" ? prob.optionsEn : prob.optionsBn).map((opt, optIdx) =>
+                        e("button", {
+                          key: optIdx,
+                          disabled: isAnswered,
+                          onClick: () => setSelectedAnswers({ ...selectedAnswers, [activeTopic.id]: optIdx }),
+                          className: `p-3 text-left rounded-lg border text-sm transition-all ${
+                            isAnswered
+                              ? optIdx === prob.correct
+                                ? "bg-emerald-950 border-emerald-500 text-emerald-200"
+                                : selectedOpt === optIdx
+                                ? "bg-rose-950 border-rose-500 text-rose-200"
+                                : "opacity-40 border-[#2A3B5C]"
+                              : "bg-[#1B2A44] border-[#2A3B5C] hover:border-[#B98D3E]"
+                          }`
+                        }, opt)
+                      )
+                    ),
+                    isAnswered && e("div", { className: "p-4 rounded-lg border text-sm bg-slate-900 border-slate-700 mt-2 text-[#DCD0A6]" },
+                      e("p", null, lang === "en" ? prob.explanationEn : prob.explanationBn)
+                    )
+                  );
+                })
+              ),
+
+              // TAB 4: PAPPU AI
+              activeTab === "assistant" && e("div", { className: "bg-[#1B2A44] border border-[#2A3B5C] rounded-b-xl p-6 space-y-4 flex flex-col h-[450px] justify-between" },
                 e("div", { className: "border-b border-[#2A3B5C] pb-3" },
                   e("h3", { className: "text-lg font-bold text-[#D9AE63]" }, t.askPappu)
                 ),
@@ -190,7 +263,7 @@
                   chatMessages.map((msg, idx) =>
                     e("div", {
                       key: idx,
-                      className: `max-w-[80%] p-3 rounded-lg text-sm ${
+                      className: `max-w-[85%] p-3 rounded-lg text-sm ${
                         msg.sender === "user"
                           ? "ml-auto bg-[#B98D3E] text-[#101B2E] font-medium"
                           : "bg-[#101B2E] text-[#F5F1E3] border border-[#2A3B5C]"
@@ -209,13 +282,14 @@
                   }),
                   e("button", {
                     onClick: handleSend,
-                    className: "bg-[#B98D3E] text-[#101B2E] font-semibold px-4 py-2 rounded-lg text-sm"
+                    className: "bg-[#B98D3E] text-[#101B2E] font-semibold px-4 py-2 rounded-lg text-sm hover:bg-[#D9AE63]"
                   }, t.send)
                 )
               )
             )
           )
         ),
+        // FOOTER
         e("footer", { className: "border-t border-[#2A3B5C]/60 bg-[#0B1321] py-6 text-center mt-12" },
           e("p", { className: "text-sm font-semibold text-[#D9AE63]" }, "Made by Pappu Singha Roy"),
           e("p", { className: "text-xs text-[#DCD0A6]/60 mt-1" }, "The part of edu-art-group")
