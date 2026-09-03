@@ -1,64 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Own Finance | Masterclass Edition</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Masterclass</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <style>
-    /* Financial Terminal Background & Aesthetics */
-    body {
-      background-color: #0B1120;
-      background-image: 
-        linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-    
-    /* Custom Scrollbar for Terminal Feel */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #0B1120; }
-    ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; border: 1px solid #334155; }
-    ::-webkit-scrollbar-thumb:hover { background: #10B981; }
-    
-    /* Animations */
-    @keyframes pulse-slow {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-    .ai-typing { animation: pulse-slow 1.5s infinite; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0b1120; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+    .ai-typing div { animation: pulse 1.4s infinite ease-in-out; }
+    .ai-typing div:nth-child(2) { animation-delay: 0.2s; }
+    .ai-typing div:nth-child(3) { animation-delay: 0.4s; }
   </style>
 </head>
-<body class="text-slate-200 font-sans antialiased min-h-screen flex flex-col">
-  <div id="root" class="flex-grow flex flex-col"></div>
+<body class="bg-[#0B1120] text-slate-100 font-sans antialiased min-h-screen">
+  <div id="root"></div>
 
   <script>
     const e = React.createElement;
-    const { useState, useRef, useEffect, useMemo } = React;
+    const { useState, useEffect, useRef, useMemo } = React;
 
     const UI = {
-      title: "OWN FINANCE",
-      subtitle: "Global Financial Literacy Platform",
-      searchPlaceholder: "Search topics, keywords...",
-      markWatched: "Mark Lesson as Watched",
-      watched: "Watched",
-      theaterMode: "Toggle Theater Mode",
+      title: "FINANCE MASTERCLASS",
+      subtitle: "By Pappu Singha Roy",
+      searchPlaceholder: "Search topics or tags...",
+      theaterMode: "Theater Mode",
+      markWatched: "Mark as Watched",
+      watched: "Watched"
     };
 
     const LEVEL_META = {
-      basic: { label: "Level 1: Foundations", color: "text-emerald-400" },
-      intermediate: { label: "Level 2: Wealth Building", color: "text-blue-400" },
-      advanced: { label: "Level 3: Advanced Markets", color: "text-purple-400" },
-      expert: { label: "Level 4: Macro & Alternative", color: "text-amber-400" }
+      basic: { label: "BASIC", color: "emerald" },
+      intermediate: { label: "INTERMEDIATE", color: "blue" },
+      advanced: { label: "ADVANCED", color: "amber" },
+      expert: { label: "EXPERT", color: "purple" }
     };
 
-    // MASSIVE FINANCE CURRICULUM
     const TOPICS = [
       // --- BASIC ---
       {
-        id: "b1", level: "basic", num: 1, youtubeId: "WedeHcjRJD8",
+        id: "b1", level: "basic", num: 1, youtubeId: "PHe0bXAIuk0",
         title: "The Evolution and True Value of Money",
         tags: ["money", "fiat", "barter", "currency"],
         intro: "Before stocks and bonds, there was barter. Money was invented to solve the 'coincidence of wants'. Today, we use fiat currency, which is backed by the trust and economic stability of the issuing government.",
@@ -67,7 +53,7 @@
         problems: [{ q: "What problem did the invention of money solve?", options: ["Inflation", "The coincidence of wants in a barter system", "Taxes", "Government debt"], correct: 1, explanation: "Money allows you to sell your goods to anyone, rather than finding someone who has exactly what you want to trade." }]
       },
       {
-        id: "b2", level: "basic", num: 2, youtubeId: "sVKQn2I4niI",
+        id: "b2", level: "basic", num: 2, youtubeId: "hqSHA12x9eI",
         title: "Mastering the Personal Budget (50/30/20)",
         tags: ["budget", "saving", "expenses", "income"],
         intro: "A budget is a blueprint for your wealth. The most popular framework is the 50/30/20 rule, which divides your after-tax income into needs, wants, and savings/investing.",
@@ -76,7 +62,7 @@
         problems: [{ q: "Where does high-interest debt repayment fall in the 50/30/20 rule?", options: ["Needs (50%)", "Wants (30%)", "Savings (20%)", "It is ignored"], correct: 2, explanation: "Paying off toxic debt is a form of guaranteed return, falling under the 20% financial goal category." }]
       },
       {
-        id: "b3", level: "basic", num: 3, youtubeId: "UWGxGE3FmcQ",
+        id: "b3", level: "basic", num: 3, youtubeId: "7K1LSpFjL-Y",
         title: "Credit Scores & Debt Management",
         tags: ["credit", "FICO", "debt", "loans"],
         intro: "Your credit score is your financial GPA. It determines your ability to buy a house, get a car loan, and sometimes even get a job. Understanding utilization and payment history is critical.",
@@ -87,7 +73,7 @@
 
       // --- INTERMEDIATE ---
       {
-        id: "i1", level: "intermediate", num: 4, youtubeId: "ZcGtUmc7xK0",
+        id: "i1", level: "intermediate", num: 4, youtubeId: "p7HKvqRI_Bo",
         title: "Stock Market Fundamentals",
         tags: ["stocks", "equities", "dividends", "investing"],
         intro: "Buying a stock means buying fractional ownership of a real business. If the business profits and grows, your shares become more valuable, and you may receive dividends.",
@@ -96,7 +82,7 @@
         problems: [{ q: "What does a Bull Market signify?", options: ["Falling prices and pessimism", "Rising prices and investor optimism", "A stagnant market", "A market only for livestock futures"], correct: 1, explanation: "A bull market occurs when prices are rising or are expected to rise." }]
       },
       {
-        id: "i2", level: "intermediate", num: 5, youtubeId: "WIlpFwN0NfM",
+        id: "i2", level: "intermediate", num: 5, youtubeId: "fwe-PjrX6kU",
         title: "Index Funds and ETFs",
         tags: ["ETF", "index funds", "diversification", "S&P500"],
         intro: "Stock picking is risky. Index funds and ETFs allow you to buy a 'basket' of hundreds of stocks at once, offering instant diversification and lower risk.",
@@ -105,7 +91,7 @@
         problems: [{ q: "Why are index funds generally recommended over actively managed mutual funds?", options: ["They guarantee 100% returns", "They have higher fees", "They have lower fees and historically outperform active managers", "They only hold bonds"], correct: 2, explanation: "Passive index funds have minimal fees (expense ratios) and consistently beat the majority of highly-paid active fund managers over a 10-year period." }]
       },
       {
-        id: "i3", level: "intermediate", num: 6, youtubeId: "7Qpu32qJk3U",
+        id: "i3", level: "intermediate", num: 6, youtubeId: "gA6m1pXJ12Y",
         title: "The Math of Compound Interest",
         tags: ["compound interest", "wealth", "math", "Rule of 72"],
         intro: "Compound interest is the snowball effect of finance. You earn interest on your initial investment, and then you earn interest on that interest in perpetuity.",
@@ -116,7 +102,7 @@
 
       // --- ADVANCED ---
       {
-        id: "a1", level: "advanced", num: 7, youtubeId: "F3QpqCANVbM",
+        id: "a1", level: "advanced", num: 7, youtubeId: "iI6zXvYfM_4",
         title: "Real Estate Investing & Leverage",
         tags: ["real estate", "mortgage", "leverage", "cash flow"],
         intro: "Real estate is a unique asset class because it allows for high leverage. You can control a $500,000 asset with only a $100,000 down payment, amplifying your returns (and risks).",
@@ -125,7 +111,7 @@
         problems: [{ q: "What is the primary risk of using leverage (debt) to buy real estate?", options: ["Higher taxes", "If property value drops, your losses are amplified", "You cannot sell the house", "Rent will decrease"], correct: 1, explanation: "Leverage amplifies both gains and losses. If the house value drops by 20%, your entire $100k equity is wiped out." }]
       },
       {
-        id: "a2", level: "advanced", num: 8, youtubeId: "q5qR20b9z8E",
+        id: "a2", level: "advanced", num: 8, youtubeId: "IuyejHOGCro",
         title: "Bonds, Yield Curves, and Fixed Income",
         tags: ["bonds", "yield curve", "interest rates", "fed"],
         intro: "When you buy a bond, you are the bank. You are lending money to a government or corporation in exchange for regular interest payments (coupons) and the return of your principal.",
@@ -134,7 +120,7 @@
         problems: [{ q: "What happens to the price of existing bonds when prevailing interest rates rise?", options: ["Prices go up", "Prices go down", "Prices stay the same", "Bonds are canceled"], correct: 1, explanation: "New bonds pay higher interest, making older, lower-paying bonds less attractive, so their market price falls." }]
       },
       {
-        id: "a3", level: "advanced", num: 9, youtubeId: "14xT0l_0E-0",
+        id: "a3", level: "advanced", num: 9, youtubeId: "5mS-dJ9h-S4",
         title: "Tax Optimization & Retirement Accounts",
         tags: ["taxes", "401k", "IRA", "Roth"],
         intro: "It is not what you make; it is what you keep. Utilizing tax-advantaged accounts like Roth IRAs and 401(k)s can save you hundreds of thousands of dollars over a lifetime.",
@@ -145,7 +131,7 @@
 
       // --- EXPERT ---
       {
-        id: "e1", level: "expert", num: 10, youtubeId: "7bK4qV6p3iI",
+        id: "e1", level: "expert", num: 10, youtubeId: "SD7sw0J11qw",
         title: "Options Trading: Calls and Puts",
         tags: ["options", "derivatives", "calls", "puts"],
         intro: "Options are derivative contracts giving you the right (but not obligation) to buy or sell a stock at a specific price by a specific date. They are highly complex and used for hedging or speculation.",
@@ -154,7 +140,7 @@
         problems: [{ q: "What does 'Theta' represent in options trading?", options: ["Volatility", "Direction of the stock", "Time decay of the option's value", "The underlying asset"], correct: 2, explanation: "Theta measures how much value an option loses each day as it gets closer to its expiration date." }]
       },
       {
-        id: "e2", level: "expert", num: 11, youtubeId: "kubGCSj5y3k",
+        id: "e2", level: "expert", num: 11, youtubeId: "1YyAzVmP9xQ",
         title: "Cryptocurrency, Bitcoin, and Web3",
         tags: ["crypto", "bitcoin", "blockchain", "decentralized"],
         intro: "Cryptocurrencies are digital assets utilizing blockchain technology for decentralized consensus. Bitcoin serves as digital gold, while smart-contract platforms like Ethereum act as decentralized computing networks.",
@@ -163,7 +149,7 @@
         problems: [{ q: "What is the primary function of a blockchain?", options: ["To speed up banking apps", "To serve as a decentralized, immutable public ledger", "To print money", "To replace the internet"], correct: 1, explanation: "A blockchain acts as a public, unchangeable record of transactions verified by a distributed network rather than a central authority." }]
       },
       {
-        id: "e3", level: "expert", num: 12, youtubeId: "6C22K52u2B0",
+        id: "e3", level: "expert", num: 12, youtubeId: "PHe0bXAIuk0",
         title: "Macroeconomics: Inflation & The Federal Reserve",
         tags: ["inflation", "fed", "macroeconomics", "CPI"],
         intro: "Macroeconomics looks at the economy as a whole. The Federal Reserve manipulates the money supply and interest rates to balance inflation and employment.",
@@ -173,8 +159,11 @@
       }
     ];
 
-    // THE FINANCE MASTER AI BRAIN
     const AI_KNOWLEDGE_BASE = [
+      {
+        keywords: ["money", "fiat", "currency", "barter", "what is money"],
+        response: "Money is a medium of exchange, a unit of account, and a store of value. It allows people to trade goods and services without relying on barter (which requires a 'coincidence of wants'). Modern paper money is 'fiat currency'—it holds value because governments decree it as legal tender and people trust its purchasing power."
+      },
       {
         keywords: ["budget", "50/30/20", "spending", "save", "saving"],
         response: "To master budgeting, I recommend the 50/30/20 rule. Allocate 50% of your net income to absolute needs (rent, groceries, utilities). Allocate 30% to discretionary wants (dining out, hobbies). The final 20% must be rigidly directed toward wealth building (investing, savings, or crushing high-interest debt). The key is automating that 20% so you never even see it in your checking account."
@@ -209,37 +198,24 @@
       }
     ];
 
-    const getAIResponse = (query) => {
-      const lowerQ = query.toLowerCase();
-      
-      // Check specific intents
-      for (let intent of AI_KNOWLEDGE_BASE) {
-        if (intent.keywords.some(kw => lowerQ.includes(kw))) {
-          return intent.response;
+    function getAIResponse(query) {
+      const lower = query.toLowerCase();
+      for (const item of AI_KNOWLEDGE_BASE) {
+        if (item.keywords.some(kw => lower.includes(kw))) {
+          return item.response;
         }
       }
-
-      // Greetings
-      if (lowerQ.match(/^(hi|hello|hey|greetings)/)) {
-        return "Greetings! I am Pappu AI, your Senior Financial Educator. I can analyze budgeting strategies, explain complex stock market mechanics, break down tax-advantaged accounts, or discuss macroeconomics. What financial concept would you like to master today?";
-      }
-
-      // Fallback
-      return "That is an excellent inquiry. In high-level finance, the optimal approach depends heavily on your timeline and risk tolerance. As a general rule: eliminate toxic high-interest debt first, build a 3-6 month emergency fund, and consistently dollar-cost average into diversified assets. Could you specify if you are asking about this in the context of investing, budgeting, or taxes?";
-    };
+      return "I don't have detailed info on that specific topic yet. Try asking about budgeting, stocks, credit scores, taxes, compound interest, or real estate!";
+    }
 
     function App() {
-      const [activeTab, setActiveTab] = useState("lessons");
       const [selectedLevel, setSelectedLevel] = useState("basic");
       const [selectedTopicId, setSelectedTopicId] = useState("b1");
-      const [selectedAnswers, setSelectedAnswers] = useState({});
-      
-      // New Features State
+      const [activeTab, setActiveTab] = useState("lessons");
       const [searchTerm, setSearchTerm] = useState("");
-      const [watchedVideos, setWatchedVideos] = useState(new Set());
       const [theaterMode, setTheaterMode] = useState(false);
-      
-      // Chat State
+      const [watchedVideos, setWatchedVideos] = useState(new Set());
+      const [selectedAnswers, setSelectedAnswers] = useState({});
       const [chatMessages, setChatMessages] = useState([
         { sender: "bot", text: "Welcome to the Masterclass. I am Pappu AI. Ask me to break down any financial concept—from the 50/30/20 budget rule to Options Trading." }
       ]);
@@ -260,305 +236,313 @@
         );
       }, [selectedLevel, searchTerm]);
 
-      const activeTopic = TOPICS.find((tp) => tp.id === selectedTopicId) || TOPICS[0];
+        const activeTopic = TOPICS.find((tp) => tp.id === selectedTopicId) || TOPICS[0];
 
-      const scrollToBottom = () => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-      };
+  // Auto-scroll chat to bottom
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatMessages, isTyping]);
 
-      useEffect(() => { if (activeTab === "assistant") scrollToBottom(); }, [chatMessages, activeTab, isTyping]);
+  // Chatbot Handler Logic
+  const handleSendMessage = () => {
+    if (!inputQuery.trim()) return;
 
-      const handleSend = () => {
-        if (!inputQuery.trim()) return;
-        const userText = inputQuery.trim();
-        setChatMessages(prev => [...prev, { sender: "user", text: userText }]);
-        setInputQuery("");
-        setIsTyping(true);
+    const userMsg = inputQuery.trim();
+    setChatMessages((prev) => [...prev, { sender: 'user', text: userMsg }]);
+    setInputQuery('');
+    setIsTyping(true);
 
-        setTimeout(() => {
-          const aiReply = getAIResponse(userText);
-          setChatMessages(prev => [...prev, { sender: "bot", text: aiReply }]);
-          setIsTyping(false);
-        }, 1200);
-      };
+    setTimeout(() => {
+      let botReply = getAIResponse(userMsg);
+      setChatMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
+      setIsTyping(false);
+    }, 600);
+  };
 
-      const toggleWatched = (id) => {
-        const newWatched = new Set(watchedVideos);
-        if (newWatched.has(id)) newWatched.delete(id);
-        else newWatched.add(id);
-        setWatchedVideos(newWatched);
-      };
-
-      const aiSuggestions = ["Explain Index Funds", "How to fix my credit score?", "What is Compound Interest?", "Roth IRA vs 401k"];
-
-      return e("div", { className: "min-h-screen flex flex-col" },
-        
-        // TOP NAVIGATION BAR
-        e("header", { className: "border-b border-emerald-900/50 bg-[#0B1120]/90 backdrop-blur-md sticky top-0 z-50 px-4 py-3 shadow-[0_4px_30px_rgba(16,185,129,0.1)]" },
-          e("div", { className: "max-w-7xl mx-auto flex justify-between items-center" },
-            e("div", { className: "flex items-center gap-4" },
-              e("div", { className: "bg-gradient-to-br from-emerald-400 to-emerald-600 text-[#0B1120] px-3 py-1 rounded-sm font-black text-xl tracking-tighter" }, "OF"),
-              e("div", null,
-                e("h1", { className: "text-xl font-black text-emerald-50 tracking-wide" }, UI.title),
-                e("p", { className: "text-xs text-emerald-400/80 font-mono tracking-widest hidden sm:block uppercase" }, UI.subtitle)
-              )
-            ),
-            e("div", { className: "text-xs text-slate-500 font-mono" }, "v2.0 MASTER")
-          )
-        ),
-        
-        // MAIN LAYOUT
-        e("main", { className: `max-w-7xl mx-auto p-4 sm:p-6 grid grid-cols-1 gap-6 w-full flex-grow transition-all duration-300 ${theaterMode && activeTab === 'videos' ? 'md:grid-cols-1' : 'md:grid-cols-12'}` },
-          
-          // SIDEBAR (Hides in Theater Mode)
-          !(theaterMode && activeTab === 'videos') && e("aside", { className: "md:col-span-4 lg:col-span-3 bg-slate-900/80 border border-slate-700/50 rounded-xl flex flex-col h-fit backdrop-blur-sm shadow-xl" },
-            
-            // Search Bar
-            e("div", { className: "p-4 border-b border-slate-700/50" },
-              e("input", {
-                type: "text",
-                placeholder: UI.searchPlaceholder,
-                value: searchTerm,
-                onChange: (e) => setSearchTerm(e.target.value),
-                className: "w-full bg-slate-950 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
-              })
-            ),
-
-            // Level Selector
-            searchTerm === "" && e("div", { className: "p-4 border-b border-slate-700/50" },
-              e("div", { className: "grid grid-cols-2 gap-2" },
-                Object.keys(LEVEL_META).map((lvlKey) =>
-                  e("button", {
-                    key: lvlKey,
-                    onClick: () => {
-                      setSelectedLevel(lvlKey);
-                      const first = TOPICS.find((t) => t.level === lvlKey);
-                      if (first) setSelectedTopicId(first.id);
-                    },
-                    className: `py-2 px-2 rounded font-bold text-xs uppercase tracking-wider transition-all duration-200 border ${
-                      selectedLevel === lvlKey 
-                        ? "bg-slate-800 border-emerald-500 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]" 
-                        : "bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-600 hover:text-slate-300"
-                    }`
-                  }, lvlKey)
-                )
-              )
-            ),
-            
-            // Topic List
-            e("div", { className: "p-2 space-y-1 overflow-y-auto max-h-[60vh] custom-scrollbar" },
-              filteredTopics.length > 0 ? filteredTopics.map((tp) =>
-                e("button", {
-                  key: tp.id,
-                  onClick: () => setSelectedTopicId(tp.id),
-                  className: `w-full text-left p-3 rounded-md border text-sm transition-all duration-200 flex justify-between items-center ${
-                    tp.id === selectedTopicId 
-                      ? "bg-emerald-900/20 border-emerald-500/50 text-emerald-50 shadow-inner" 
-                      : "bg-transparent border-transparent text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
-                  }`
-                }, 
-                  e("span", { className: "font-medium" }, `${tp.num}. ${tp.title}`),
-                  watchedVideos.has(tp.id) && e("span", { className: "text-emerald-500 text-xs ml-2" }, "✓")
-                )
-              ) : e("div", { className: "p-4 text-center text-slate-500 text-sm font-mono" }, "No topics found.")
-            )
-          ),
-          
-          // MAIN CONTENT AREA
-          e("section", { className: `${theaterMode && activeTab === 'videos' ? 'md:col-span-12' : 'md:col-span-8 lg:col-span-9'} flex flex-col gap-0` },
-            
-            // TABS
-            e("div", { className: "flex border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-sm rounded-t-xl px-2 pt-2 gap-2 overflow-x-auto" },
-              ["lessons", "videos", "quiz", "assistant"].map((tab) =>
-                e("button", {
-                  key: tab,
-                  onClick: () => setActiveTab(tab),
-                  className: `px-6 py-3 text-sm font-bold uppercase tracking-widest border-b-2 whitespace-nowrap transition-colors duration-200 ${
-                    activeTab === tab 
-                      ? "border-emerald-400 text-emerald-400" 
-                      : "border-transparent text-slate-500 hover:text-slate-300"
-                  }`
-                }, tab === "assistant" ? "Pappu AI" : tab)
-              )
-            ),
-
-            // CONTENT WRAPPER
-            e("div", { className: "bg-slate-900/60 border border-t-0 border-slate-700/50 rounded-b-xl backdrop-blur-md shadow-2xl overflow-hidden flex-grow flex flex-col" },
-              
-              // TAB 1: LESSONS
-              activeTab === "lessons" && activeTopic && e("div", { className: "p-6 sm:p-10" },
-                e("div", { className: "flex gap-2 mb-4" }, 
-                  activeTopic.tags.map(tag => e("span", { key: tag, className: "text-xs font-mono bg-slate-800 text-emerald-400 px-2 py-1 rounded-sm border border-emerald-900" }, `#${tag}`))
-                ),
-                e("h2", { className: "text-3xl sm:text-4xl font-black mb-6 text-slate-50 leading-tight" }, activeTopic.title),
-                e("p", { className: "text-lg text-slate-300 mb-10 leading-relaxed" }, activeTopic.intro),
-                
-                e("div", { className: "grid md:grid-cols-2 gap-6" },
-                  e("div", { className: "bg-slate-800/50 border border-slate-700 p-6 rounded-lg" },
-                    e("h3", { className: "font-black text-sm uppercase tracking-widest text-amber-400 mb-4 flex items-center" }, 
-                      e("span", { className: "w-2 h-2 bg-amber-400 rounded-full mr-2" }), "Key Takeaways"
-                    ),
-                    e("ul", { className: "space-y-3 text-sm font-medium text-slate-200" },
-                      activeTopic.keyPoints.map((pt, i) => e("li", { key: i, className: "flex items-start" }, 
-                        e("span", { className: "text-emerald-500 mr-2" }, "→"), pt
-                      ))
-                    )
-                  ),
-                  e("div", { className: "bg-slate-950 border border-slate-800 p-6 rounded-lg relative overflow-hidden" },
-                    e("div", { className: "absolute top-0 right-0 w-16 h-16 bg-emerald-900/20 rounded-bl-full" }),
-                    e("h4", { className: "text-xs font-mono uppercase tracking-widest text-slate-400 mb-3" }, "Real-World Example"),
-                    e("p", { className: "text-sm text-emerald-100 italic leading-relaxed" }, `"${activeTopic.example}"`)
-                  )
-                )
-              ),
-
-              // TAB 2: VIDEO SECTION
-              activeTab === "videos" && activeTopic && e("div", { className: "p-4 flex flex-col h-full" },
-                e("div", { className: "flex justify-between items-center mb-4 px-2" },
-                  e("h3", { className: "text-xl font-bold text-slate-200" }, activeTopic.title),
-                  e("div", { className: "flex gap-3" },
-                    e("button", { 
-                      onClick: () => setTheaterMode(!theaterMode),
-                      className: "text-xs font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded transition"
-                    }, UI.theaterMode),
-                    e("button", {
-                      onClick: () => toggleWatched(activeTopic.id),
-                      className: `text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded transition ${watchedVideos.has(activeTopic.id) ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/50" : "bg-slate-800 text-slate-400 hover:text-white"}`
-                    }, watchedVideos.has(activeTopic.id) ? `✓ ${UI.watched}` : UI.markWatched)
-                  )
-                ),
-                e("div", { className: `relative w-full rounded-lg overflow-hidden bg-black border border-slate-700 shadow-2xl transition-all duration-300 ${theaterMode ? 'h-[70vh]' : 'aspect-video'}` },
-                  e("iframe", {
-                    className: "w-full h-full absolute top-0 left-0",
-                    src: `https://www.youtube.com/embed/${activeTopic.youtubeId}`,
-                    title: "Financial Lesson Video",
-                    frameBorder: "0",
-                    allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-                    allowFullScreen: true
-                  })
-                )
-              ),
-
-              // TAB 3: QUIZ
-              activeTab === "quiz" && activeTopic && e("div", { className: "p-6 sm:p-10 space-y-8" },
-                activeTopic.problems.map((prob, pIdx) => {
-                  const selectedOpt = selectedAnswers[activeTopic.id];
-                  const isAnswered = selectedOpt !== undefined;
-                  return e("div", { key: pIdx, className: "bg-slate-950 p-8 rounded-xl border border-slate-800 shadow-lg space-y-6" },
-                    e("div", { className: "flex items-center gap-3 mb-2" },
-                      e("span", { className: "bg-blue-900/50 text-blue-400 text-xs font-mono px-2 py-1 rounded" }, `QUESTION ${pIdx + 1}`),
-                    ),
-                    e("p", { className: "font-semibold text-xl text-slate-200 leading-relaxed" }, prob.q),
-                    e("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4" },
-                      prob.options.map((opt, optIdx) =>
-                        e("button", {
-                          key: optIdx,
-                          disabled: isAnswered,
-                          onClick: () => setSelectedAnswers({ ...selectedAnswers, [activeTopic.id]: optIdx }),
-                          className: `p-4 text-left rounded-lg border text-sm font-medium transition-all duration-200 flex items-center justify-between ${
-                            isAnswered
-                              ? optIdx === prob.correct
-                                ? "bg-emerald-900/40 border-emerald-500 text-emerald-200"
-                                : selectedOpt === optIdx
-                                ? "bg-rose-900/40 border-rose-500 text-rose-200"
-                                : "opacity-30 border-slate-700 bg-slate-900"
-                              : "bg-slate-900 border-slate-700 hover:border-blue-500 hover:bg-slate-800 text-slate-300"
-                          }`
-                        }, 
-                        e("span", null, opt),
-                        isAnswered && optIdx === prob.correct && e("span", { className: "text-emerald-400 font-bold" }, "✓"),
-                        isAnswered && selectedOpt === optIdx && optIdx !== prob.correct && e("span", { className: "text-rose-400 font-bold" }, "✗")
-                        )
-                      )
-                    ),
-                    isAnswered && e("div", { className: "p-5 rounded-lg border text-sm bg-slate-800 border-emerald-900/50 mt-6 text-slate-300 flex items-start gap-3" },
-                      e("div", { className: "mt-1 w-2 h-2 bg-emerald-400 rounded-full flex-shrink-0" }),
-                      e("p", null, e("span", { className: "font-bold text-amber-400 mr-2" }, "ANALYSIS:"), prob.explanation)
-                    )
-                  );
-                })
-              ),
-
-              // TAB 4: PAPPU AI
-              activeTab === "assistant" && e("div", { className: "flex flex-col h-[600px] bg-slate-950" },
-                e("div", { className: "border-b border-slate-800 p-4 bg-slate-900 flex items-center justify-between" },
-                  e("div", { className: "flex items-center gap-3" },
-                    e("div", { className: "relative" },
-                      e("div", { className: "w-10 h-10 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-full flex items-center justify-center font-black text-white shadow-lg" }, "AI"),
-                      e("div", { className: "absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-slate-900 rounded-full" })
-                    ),
-                    e("div", null,
-                      e("h3", { className: "text-sm font-bold text-slate-200" }, "Pappu AI"),
-                      e("p", { className: "text-xs font-mono text-emerald-400" }, "Senior Financial Analyst")
-                    )
-                  )
-                ),
-                
-                e("div", { className: "flex-grow overflow-y-auto p-4 space-y-6 custom-scrollbar" },
-                  chatMessages.map((msg, idx) =>
-                    e("div", { key: idx, className: `flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}` },
-                      e("span", { className: "text-[10px] font-mono text-slate-500 mb-1 px-1" }, msg.sender === "user" ? "YOU" : "PAPPU AI"),
-                      e("div", {
-                        className: `max-w-[85%] p-4 text-sm leading-relaxed shadow-md ${
-                          msg.sender === "user"
-                            ? "bg-blue-600 text-white font-medium rounded-2xl rounded-tr-sm"
-                            : "bg-slate-800 text-slate-200 border border-slate-700 rounded-2xl rounded-tl-sm"
-                        }`
-                      }, msg.text)
-                    )
-                  ),
-                  isTyping && e("div", { className: "flex flex-col items-start" },
-                    e("div", { className: "bg-slate-800 border border-slate-700 p-4 rounded-2xl rounded-tl-sm ai-typing" },
-                      e("div", { className: "flex gap-1" },
-                        e("div", { className: "w-2 h-2 bg-emerald-500 rounded-full" }),
-                        e("div", { className: "w-2 h-2 bg-emerald-500 rounded-full" }),
-                        e("div", { className: "w-2 h-2 bg-emerald-500 rounded-full" })
-                      )
-                    )
-                  ),
-                  e("div", { ref: chatEndRef })
-                ),
-
-                e("div", { className: "px-4 pb-2 flex gap-2 overflow-x-auto custom-scrollbar" },
-                  aiSuggestions.map(sug => 
-                    e("button", { 
-                      key: sug,
-                      onClick: () => { setInputQuery(sug); },
-                      className: "whitespace-nowrap text-xs bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 px-3 py-1.5 rounded-full transition"
-                    }, sug)
-                  )
-                ),
-                
-                e("div", { className: "p-4 bg-slate-900 border-t border-slate-800 flex gap-2" },
-                  e("input", {
-                    type: "text",
-                    value: inputQuery,
-                    onChange: (evt) => setInputQuery(evt.target.value),
-                    onKeyDown: (evt) => evt.key === "Enter" && handleSend(),
-                    placeholder: "Ask a financial question...",
-                    className: "flex-grow bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-all font-mono"
-                  }),
-                  e("button", {
-                    onClick: handleSend,
-                    className: "bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-6 py-3 rounded-lg text-sm shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center"
-                  }, "SEND")
-                )
-              )
-            )
-          )
-        ),
-        
-        // FOOTER
-        e("footer", { className: "border-t border-slate-800 bg-[#0B1120] py-8 text-center mt-12 relative overflow-hidden" },
-          e("div", { className: "absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-50" }),
-          e("p", { className: "text-sm font-bold text-slate-400 tracking-wide" }, "Developed by ", e("span", { className: "text-emerald-500" }, "Pappu Singha Roy")),
-          e("p", { className: "text-xs text-slate-600 mt-2 font-mono uppercase tracking-widest" }, "An Education & Art Store Initiative")
-        )
-      );
+  const getAIResponse = (query) => {
+    const lowerQ = query.toLowerCase();
+    if (lowerQ.match(/^(hi|hello|hey|greetings)/)) {
+      return "Greetings! I am Pappu AI. How can I assist you with financial concepts today?";
     }
+    if (lowerQ.includes("money") || lowerQ.includes("value")) {
+      return "Money serves as a medium of exchange, unit of account, and store of value. Its value comes from central bank backing and general public trust!";
+    }
+    if (lowerQ.includes("budget") || lowerQ.includes("50/30/20")) {
+      return "Remember to save regularly and follow the 50/30/20 budgeting rule: 50% Needs, 30% Wants, and 20% Savings!";
+    }
+    return "That is an excellent inquiry. In high-level finance, the optimal approach depends heavily on your timeline and risk tolerance. As a general rule: eliminate toxic high-interest debt first, build a 3-6 month emergency fund, and consistently dollar-cost average into diversified assets. Could you specify if you are asking about this in the context of investing, budgeting, or taxes?";
+  };
 
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(e(App));
-  </script>
-</body>
+  const toggleVideoWatched = (id) => {
+    setWatchedVideos((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAnswer = (qIdx, optionIdx) => {
+    setSelectedAnswers((prev) => ({ ...prev, [qIdx]: optionIdx }));
+  };
+
+  return (
+    <div className={`min-h-screen ${theaterMode ? 'bg-black text-white' : 'bg-[#0B132B] text-slate-100'} font-sans pb-10 transition-colors duration-300`}>
+      {/* Header */}
+      <header className="flex items-center justify-between px-4 py-3 bg-[#1C2541] border-b border-slate-800 sticky top-0 z-50 shadow-md">
+        <div className="flex items-center space-x-3">
+          <div className="bg-[#E0A96D] text-[#0B132B] font-bold text-lg px-3 py-1 rounded">OF</div>
+          <h1 className="text-xl font-bold tracking-wide text-white">
+            OWN FINANCE <span className="text-xs text-emerald-400 font-mono ml-2">v2.0 MASTER</span>
+          </h1>
+        </div>
+        <button className="px-4 py-1.5 rounded-full border border-[#E0A96D] text-[#E0A96D] text-sm font-medium hover:bg-[#E0A96D] hover:text-[#0B132B] transition">
+          বাংলা
+        </button>
+      </header>
+
+      <main className="max-w-4xl mx-auto p-4 space-y-6">
+        {/* Level and Topic Selection Card */}
+        <div className="bg-[#1C2541] p-4 rounded-xl border border-slate-800 shadow-lg space-y-4">
+          <div>
+            <label className="text-xs font-semibold text-[#E0A96D] uppercase tracking-wider block mb-2">
+              Select Level
+            </label>
+            <div className="grid grid-cols-3 gap-2 bg-[#0B132B] p-1 rounded-lg">
+              {['Basic', 'Intermediate', 'Advanced'].map((lvl) => (
+                <button
+                  key={lvl}
+                  onClick={() => {
+                    setSelectedLevel(lvl);
+                    setSelectedTopicId(1);
+                  }}
+                  className={`py-2 text-sm font-medium rounded-md transition ${
+                    selectedLevel === lvl
+                      ? 'bg-[#E0A96D] text-[#0B132B] font-bold shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {lvl}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-[#E0A96D] uppercase tracking-wider block mb-2">
+              Select a Topic
+            </label>
+            <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+              {filteredTopics.map((tp) => (
+                <button
+                  key={tp.id}
+                  onClick={() => setSelectedTopicId(tp.id)}
+                  className={`w-full text-left p-3 rounded-lg border transition ${
+                    selectedTopicId === tp.id
+                      ? 'bg-[#1C3144] border-[#E0A96D] text-white font-medium'
+                      : 'bg-[#0B132B] border-slate-800 text-slate-300 hover:bg-[#121A2D]'
+                  }`}
+                >
+                  {tp.id}. {tp.title}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex border-b border-slate-800 bg-[#1C2541] rounded-t-xl overflow-x-auto">
+          {[
+            { id: 'lessons', label: 'Lessons' },
+            { id: 'videos', label: 'Video Section' },
+            { id: 'quiz', label: 'Practice & Quiz' },
+            { id: 'ai', label: 'Pappu AI' }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 py-3 px-4 text-center font-semibold text-sm whitespace-nowrap border-b-2 transition ${
+                activeTab === tab.id
+                  ? 'border-[#E0A96D] text-[#E0A96D] bg-[#0B132B]/40'
+                  : 'border-transparent text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content Panels */}
+        <div className="bg-[#1C2541] p-5 rounded-b-xl border border-t-0 border-slate-800 min-h-[360px]">
+          {/* LESSONS TAB */}
+          {activeTab === 'lessons' && activeTopic && (
+            <div className="space-y-6 text-slate-900 bg-[#FAF7F2] p-6 rounded-xl shadow-md">
+              <h2 className="text-2xl font-bold text-[#0B132B] border-b pb-2">{activeTopic.title}</h2>
+              <p className="text-base leading-relaxed text-slate-700">{activeTopic.intro}</p>
+
+              {activeTopic.takeaways && (
+                <div className="bg-[#F3E8DC] p-4 rounded-lg border-l-4 border-[#E0A96D]">
+                  <h3 className="text-xs font-bold uppercase text-[#8C5E3C] tracking-wide mb-2">Key Takeaways</h3>
+                  <ul className="list-disc list-inside space-y-1 text-sm font-medium text-slate-800">
+                    {activeTopic.takeaways.map((point, idx) => (
+                      <li key={idx}>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {activeTopic.example && (
+                <div className="bg-[#0B132B] text-slate-100 p-4 rounded-lg">
+                  <h4 className="text-xs font-bold text-[#E0A96D] uppercase mb-1">Practical Example</h4>
+                  <p className="italic text-sm">"{activeTopic.example}"</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* VIDEOS TAB */}
+          {activeTab === 'videos' && activeTopic && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center flex-wrap gap-2">
+                <h2 className="text-xl font-bold text-white">{activeTopic.title}</h2>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setTheaterMode(!theaterMode)}
+                    className="px-3 py-1.5 text-xs font-semibold rounded bg-slate-700 text-slate-200 hover:bg-slate-600 transition"
+                  >
+                    Toggle Theater Mode
+                  </button>
+                  <button
+                    onClick={() => toggleVideoWatched(activeTopic.id)}
+                    className={`px-3 py-1.5 text-xs font-semibold rounded transition ${
+                      watchedVideos.includes(activeTopic.id)
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-slate-700 text-slate-200 hover:bg-slate-600'
+                    }`}
+                  >
+                    {watchedVideos.includes(activeTopic.id) ? '✓ WATCHED' : 'MARK LESSON AS WATCHED'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="aspect-video w-full rounded-xl overflow-hidden bg-black border border-slate-800">
+                <iframe
+                  className="w-full h-full"
+                  src={activeTopic.videoUrl || "https://www.youtube.com/embed/dQw4w9WgXcQ"}
+                  title={activeTopic.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          )}
+
+          {/* PRACTICE & QUIZ TAB */}
+          {activeTab === 'quiz' && activeTopic && (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold text-white">{activeTopic.title} - Quiz</h2>
+              {activeTopic.questions?.map((q, qIdx) => (
+                <div key={qIdx} className="bg-[#0B132B] p-4 rounded-lg border border-slate-800 space-y-3">
+                  <p className="font-semibold text-slate-200">{qIdx + 1}. {q.question}</p>
+                  <div className="space-y-2">
+                    {q.options.map((opt, oIdx) => {
+                      const isSelected = selectedAnswers[qIdx] === oIdx;
+                      const isCorrect = oIdx === q.answer;
+                      let btnStyle = "bg-[#1C2541] text-slate-300 border-slate-700";
+                      if (isSelected) {
+                        btnStyle = isCorrect
+                          ? "bg-emerald-900 border-emerald-500 text-emerald-200"
+                          : "bg-rose-900 border-rose-500 text-rose-200";
+                      }
+                      return (
+                        <button
+                          key={oIdx}
+                          onClick={() => handleSelectAnswer(qIdx, oIdx)}
+                          className={`w-full text-left p-2.5 rounded text-sm border transition ${btnStyle}`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* PAPPU AI TAB */}
+          {activeTab === 'ai' && (
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">Ask Pappu AI</h2>
+              <div className="h-80 overflow-y-auto space-y-3 p-3 bg-[#0B132B] rounded-xl border border-slate-800">
+                {chatMessages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[85%] p-3 rounded-2xl text-sm ${
+                        msg.sender === 'user'
+                          ? 'bg-[#2563EB] text-white rounded-tr-none font-medium'
+                          : 'bg-[#1C2541] text-slate-200 rounded-tl-none border border-slate-700'
+                      }`}
+                    >
+                      {msg.sender === 'bot' && (
+                        <div className="text-[10px] uppercase font-bold text-slate-400 mb-1">
+                          Pappu AI
+                        </div>
+                      )}
+                      {msg.text}
+                    </div>
+                  </div>
+                ))}
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-[#1C2541] text-slate-400 p-3 rounded-2xl text-xs italic border border-slate-700">
+                      Pappu AI is typing...
+                    </div>
+                  </div>
+                )}
+                <div ref={chatEndRef} />
+              </div>
+
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={inputQuery}
+                  onChange={(e) => setInputQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                  placeholder="Ask a financial question..."
+                  className="flex-1 bg-[#0B132B] border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#2563EB]"
+                />
+                <button
+                  onClick={handleSendMessage}
+                  className="bg-[#10B981] hover:bg-emerald-600 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition"
+                >
+                  SEND
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="text-center mt-10 text-xs text-slate-500 space-y-1">
+        <p>
+          Developed by <span className="text-emerald-400 font-semibold">Pappu Singha Roy</span>
+        </p>
+        <p className="text-[10px] uppercase tracking-wider text-slate-600">
+          An Education & Art Store Initiative
+        </p>
+      </footer>
+    </div>
+  );
+}
+
+// Render root component
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+root.render(<App />);
+                </script>
+  </body>
 </html>
+
+    
