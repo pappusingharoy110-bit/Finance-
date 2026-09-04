@@ -1,548 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Finance Masterclass</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Own Finance Master</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <style>
-    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: #0b1120; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #10b981; }
-    @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
-    .ai-typing div { animation: pulse 1.4s infinite ease-in-out; }
-    .ai-typing div:nth-child(2) { animation-delay: 0.2s; }
-    .ai-typing div:nth-child(3) { animation-delay: 0.4s; }
-  </style>
+  <!-- React & ReactDOM CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel Compiler -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-[#0B1120] text-slate-100 font-sans antialiased min-h-screen">
+<body class="bg-[#0B132B]">
+
+  <!-- REQUIRED: HTML Root Element -->
   <div id="root"></div>
 
-  <script>
-    const e = React.createElement;
-    const { useState, useEffect, useRef, useMemo } = React;
+  <!-- REQUIRED: Babel Script Type -->
+  <script type="text/babel">
+    // REQUIRED FOR CDN REACT: Extract React Hooks
+    const { useState, useEffect, useMemo, useRef } = React;
 
-    const UI = {
-      title: "FINANCE MASTERCLASS",
-      subtitle: "By Pappu Singha Roy",
-      searchPlaceholder: "Search topics or tags...",
-      theaterMode: "Theater Mode",
-      markWatched: "Mark as Watched",
-      watched: "Watched"
-    };
-
-    const LEVEL_META = {
-      basic: { label: "BASIC", color: "emerald" },
-      intermediate: { label: "INTERMEDIATE", color: "blue" },
-      advanced: { label: "ADVANCED", color: "amber" },
-      expert: { label: "EXPERT", color: "purple" }
-    };
-
+    // Sample Topics Data (Prevents runtime crash)
     const TOPICS = [
-      // --- BASIC ---
       {
-        id: "b1", level: "basic", num: 1, youtubeId: "PHe0bXAIuk0",
-        title: "The Evolution and True Value of Money",
-        tags: ["money", "fiat", "barter", "currency"],
-        intro: "Before stocks and bonds, there was barter. Money was invented to solve the 'coincidence of wants'. Today, we use fiat currency, which is backed by the trust and economic stability of the issuing government.",
-        keyPoints: ["Unit of Account", "Store of Value", "Medium of Exchange", "Fiat vs. Commodity Money"],
-        example: "Gold has intrinsic value (commodity money), whereas a $100 bill only has value because the US Government decrees it as legal tender (fiat).",
-        problems: [{ q: "What problem did the invention of money solve?", options: ["Inflation", "The coincidence of wants in a barter system", "Taxes", "Government debt"], correct: 1, explanation: "Money allows you to sell your goods to anyone, rather than finding someone who has exactly what you want to trade." }]
-      },
-      {
-        id: "b2", level: "basic", num: 2, youtubeId: "hqSHA12x9eI",
-        title: "Mastering the Personal Budget (50/30/20)",
-        tags: ["budget", "saving", "expenses", "income"],
-        intro: "A budget is a blueprint for your wealth. The most popular framework is the 50/30/20 rule, which divides your after-tax income into needs, wants, and savings/investing.",
-        keyPoints: ["50% Needs (Housing, Groceries)", "30% Wants (Entertainment, Dining)", "20% Savings (Investing, Debt Payoff)"],
-        example: "On a $4,000 net monthly income: $2,000 covers rent and food. $1,200 is for guilt-free spending. $800 is invested for your future.",
-        problems: [{ q: "Where does high-interest debt repayment fall in the 50/30/20 rule?", options: ["Needs (50%)", "Wants (30%)", "Savings (20%)", "It is ignored"], correct: 2, explanation: "Paying off toxic debt is a form of guaranteed return, falling under the 20% financial goal category." }]
-      },
-      {
-        id: "b3", level: "basic", num: 3, youtubeId: "7K1LSpFjL-Y",
-        title: "Credit Scores & Debt Management",
-        tags: ["credit", "FICO", "debt", "loans"],
-        intro: "Your credit score is your financial GPA. It determines your ability to buy a house, get a car loan, and sometimes even get a job. Understanding utilization and payment history is critical.",
-        keyPoints: ["Payment History (35%)", "Credit Utilization (30%)", "Length of Credit (15%)", "Avoid paying interest by paying the statement balance"],
-        example: "If you have a credit card with a $10,000 limit, keeping your balance below $3,000 (30% utilization) will rapidly boost your score.",
-        problems: [{ q: "What is the single most important factor in your FICO credit score?", options: ["Credit mix", "Payment history", "New credit inquiries", "Age of accounts"], correct: 1, explanation: "Payment history makes up 35% of your score. A single late payment can severely damage your credit." }]
-      },
-
-      // --- INTERMEDIATE ---
-      {
-        id: "i1", level: "intermediate", num: 4, youtubeId: "p7HKvqRI_Bo",
-        title: "Stock Market Fundamentals",
-        tags: ["stocks", "equities", "dividends", "investing"],
-        intro: "Buying a stock means buying fractional ownership of a real business. If the business profits and grows, your shares become more valuable, and you may receive dividends.",
-        keyPoints: ["Market Capitalization", "P/E Ratios", "Dividends vs. Growth", "Bull vs. Bear Markets"],
-        example: "Apple (AAPL) sells iPhones. When they report record profits, more people want to own AAPL stock, driving the price up.",
-        problems: [{ q: "What does a Bull Market signify?", options: ["Falling prices and pessimism", "Rising prices and investor optimism", "A stagnant market", "A market only for livestock futures"], correct: 1, explanation: "A bull market occurs when prices are rising or are expected to rise." }]
-      },
-      {
-        id: "i2", level: "intermediate", num: 5, youtubeId: "fwe-PjrX6kU",
-        title: "Index Funds and ETFs",
-        tags: ["ETF", "index funds", "diversification", "S&P500"],
-        intro: "Stock picking is risky. Index funds and ETFs allow you to buy a 'basket' of hundreds of stocks at once, offering instant diversification and lower risk.",
-        keyPoints: ["S&P 500 Index", "Low Expense Ratios", "Passive vs. Active Management", "Warren Buffett's advice"],
-        example: "Instead of risking $500 on one company, buying an S&P 500 ETF (like VOO) spreads that $500 across the 500 largest US companies.",
-        problems: [{ q: "Why are index funds generally recommended over actively managed mutual funds?", options: ["They guarantee 100% returns", "They have higher fees", "They have lower fees and historically outperform active managers", "They only hold bonds"], correct: 2, explanation: "Passive index funds have minimal fees (expense ratios) and consistently beat the majority of highly-paid active fund managers over a 10-year period." }]
-      },
-      {
-        id: "i3", level: "intermediate", num: 6, youtubeId: "gA6m1pXJ12Y",
-        title: "The Math of Compound Interest",
-        tags: ["compound interest", "wealth", "math", "Rule of 72"],
-        intro: "Compound interest is the snowball effect of finance. You earn interest on your initial investment, and then you earn interest on that interest in perpetuity.",
-        keyPoints: ["Formula: A = P(1 + r/n)^(nt)", "Time is the biggest variable", "The Rule of 72"],
-        example: "$10,000 invested at a 10% annual return becomes $20,000 in 7.2 years, $40,000 in 14.4 years, and $80,000 in 21.6 years—without adding any extra money.",
-        problems: [{ q: "Using the Rule of 72, how long does it take money to double at an 8% return?", options: ["7 years", "9 years", "8 years", "12 years"], correct: 1, explanation: "72 divided by 8 equals 9 years." }]
-      },
-
-      // --- ADVANCED ---
-      {
-        id: "a1", level: "advanced", num: 7, youtubeId: "iI6zXvYfM_4",
-        title: "Real Estate Investing & Leverage",
-        tags: ["real estate", "mortgage", "leverage", "cash flow"],
-        intro: "Real estate is a unique asset class because it allows for high leverage. You can control a $500,000 asset with only a $100,000 down payment, amplifying your returns (and risks).",
-        keyPoints: ["Cash flow vs. Appreciation", "The power of the 30-year fixed mortgage", "Tax advantages (Depreciation)", "REITs as an alternative"],
-        example: "If a $500k house appreciates by 5% ($25k), that is a 25% return on your actual $100k down payment cash.",
-        problems: [{ q: "What is the primary risk of using leverage (debt) to buy real estate?", options: ["Higher taxes", "If property value drops, your losses are amplified", "You cannot sell the house", "Rent will decrease"], correct: 1, explanation: "Leverage amplifies both gains and losses. If the house value drops by 20%, your entire $100k equity is wiped out." }]
-      },
-      {
-        id: "a2", level: "advanced", num: 8, youtubeId: "IuyejHOGCro",
-        title: "Bonds, Yield Curves, and Fixed Income",
-        tags: ["bonds", "yield curve", "interest rates", "fed"],
-        intro: "When you buy a bond, you are the bank. You are lending money to a government or corporation in exchange for regular interest payments (coupons) and the return of your principal.",
-        keyPoints: ["Inverse relationship of bond prices and interest rates", "Treasuries vs. Corporate Bonds", "Inverted Yield Curve as a recession signal"],
-        example: "If you own a bond paying 3% and the government raises rates to issue new bonds at 5%, the resale value of your 3% bond will drop.",
-        problems: [{ q: "What happens to the price of existing bonds when prevailing interest rates rise?", options: ["Prices go up", "Prices go down", "Prices stay the same", "Bonds are canceled"], correct: 1, explanation: "New bonds pay higher interest, making older, lower-paying bonds less attractive, so their market price falls." }]
-      },
-      {
-        id: "a3", level: "advanced", num: 9, youtubeId: "5mS-dJ9h-S4",
-        title: "Tax Optimization & Retirement Accounts",
-        tags: ["taxes", "401k", "IRA", "Roth"],
-        intro: "It is not what you make; it is what you keep. Utilizing tax-advantaged accounts like Roth IRAs and 401(k)s can save you hundreds of thousands of dollars over a lifetime.",
-        keyPoints: ["Traditional (Pre-tax) vs. Roth (Post-tax)", "Employer Matches (Free Money)", "Capital Gains Tax brackets"],
-        example: "Contributing to a Traditional 401(k) lowers your taxable income today. Contributing to a Roth IRA means your money grows tax-free forever.",
-        problems: [{ q: "What is the main advantage of a Roth IRA?", options: ["Tax deduction today", "Guaranteed returns", "Withdrawals in retirement are completely tax-free", "Infinite contribution limits"], correct: 2, explanation: "Because you fund a Roth with after-tax money, all future growth and withdrawals are tax-free." }]
-      },
-
-      // --- EXPERT ---
-      {
-        id: "e1", level: "expert", num: 10, youtubeId: "SD7sw0J11qw",
-        title: "Options Trading: Calls and Puts",
-        tags: ["options", "derivatives", "calls", "puts"],
-        intro: "Options are derivative contracts giving you the right (but not obligation) to buy or sell a stock at a specific price by a specific date. They are highly complex and used for hedging or speculation.",
-        keyPoints: ["Call Options (Betting on price increase)", "Put Options (Betting on price decrease / Hedging)", "The Greeks (Delta, Theta, Gamma)", "Time Decay (Theta)"],
-        example: "Buying a Call option on TSLA with a $200 strike price gives you the right to buy TSLA at $200, even if the market price skyrockets to $300.",
-        problems: [{ q: "What does 'Theta' represent in options trading?", options: ["Volatility", "Direction of the stock", "Time decay of the option's value", "The underlying asset"], correct: 2, explanation: "Theta measures how much value an option loses each day as it gets closer to its expiration date." }]
-      },
-      {
-        id: "e2", level: "expert", num: 11, youtubeId: "1YyAzVmP9xQ",
-        title: "Cryptocurrency, Bitcoin, and Web3",
-        tags: ["crypto", "bitcoin", "blockchain", "decentralized"],
-        intro: "Cryptocurrencies are digital assets utilizing blockchain technology for decentralized consensus. Bitcoin serves as digital gold, while smart-contract platforms like Ethereum act as decentralized computing networks.",
-        keyPoints: ["Proof of Work vs. Proof of Stake", "Hard supply caps (21 Million BTC)", "Self-custody (Cold wallets)", "Extreme volatility"],
-        example: "Unlike fiat currency which central banks can print infinitely, Bitcoin's code dictates there will never be more than 21 million coins, creating engineered scarcity.",
-        problems: [{ q: "What is the primary function of a blockchain?", options: ["To speed up banking apps", "To serve as a decentralized, immutable public ledger", "To print money", "To replace the internet"], correct: 1, explanation: "A blockchain acts as a public, unchangeable record of transactions verified by a distributed network rather than a central authority." }]
-      },
-      {
-        id: "e3", level: "expert", num: 12, youtubeId: "PHe0bXAIuk0",
-        title: "Macroeconomics: Inflation & The Federal Reserve",
-        tags: ["inflation", "fed", "macroeconomics", "CPI"],
-        intro: "Macroeconomics looks at the economy as a whole. The Federal Reserve manipulates the money supply and interest rates to balance inflation and employment.",
-        keyPoints: ["Quantitative Easing (Money Printing)", "The Consumer Price Index (CPI)", "Interest Rate Hikes to combat inflation"],
-        example: "When inflation hits 8%, the Fed raises interest rates. This makes borrowing money for homes and businesses more expensive, cooling down the economy and lowering prices.",
-        problems: [{ q: "How does the central bank traditionally fight high inflation?", options: ["Lowering interest rates", "Printing more money", "Raising interest rates", "Buying corporate stock"], correct: 2, explanation: "Raising interest rates makes borrowing more expensive, which decreases consumer spending and slows down price increases." }]
+        id: 1,
+        level: 'Basic',
+        title: 'Introduction to Money & Finance',
+        intro: 'Money is any item or verifiable record that is generally accepted as payment for goods and services.',
+        takeaways: ['Medium of exchange', 'Unit of account', 'Store of value'],
+        example: 'Using cash or a debit card to purchase groceries.',
+        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        questions: [
+          {
+            question: 'What is a primary function of money?',
+            options: ['Medium of Exchange', 'Physical Weight', 'Color Variance'],
+            answer: 0
+          }
+        ]
       }
     ];
-
-    const AI_KNOWLEDGE_BASE = [
-      {
-        keywords: ["money", "fiat", "currency", "barter", "what is money"],
-        response: "Money is a medium of exchange, a unit of account, and a store of value. It allows people to trade goods and services without relying on barter (which requires a 'coincidence of wants'). Modern paper money is 'fiat currency'—it holds value because governments decree it as legal tender and people trust its purchasing power."
-      },
-      {
-        keywords: ["budget", "50/30/20", "spending", "save", "saving"],
-        response: "To master budgeting, I recommend the 50/30/20 rule. Allocate 50% of your net income to absolute needs (rent, groceries, utilities). Allocate 30% to discretionary wants (dining out, hobbies). The final 20% must be rigidly directed toward wealth building (investing, savings, or crushing high-interest debt). The key is automating that 20% so you never even see it in your checking account."
-      },
-      {
-        keywords: ["stock", "invest", "market", "equities", "shares"],
-        response: "The stock market is the greatest wealth-creation machine in history. When starting, avoid picking individual stocks. Instead, buy Broad Market Index Funds or ETFs (like VOO or VTI). These funds hold hundreds of top companies, providing instant diversification, minimizing your risk, and guaranteeing you capture the overall growth of the economy."
-      },
-      {
-        keywords: ["credit", "score", "fico", "card", "debt"],
-        response: "Your credit score dictates your financial leverage. To build an elite score (750+): 1. Never miss a payment (Payment History is 35% of your score). 2. Keep your Credit Utilization below 10-30% (Don't max out your cards). 3. Always pay the full statement balance every month to avoid predatory interest rates."
-      },
-      {
-        keywords: ["tax", "taxes", "401k", "ira", "roth"],
-        response: "Tax optimization is crucial. Utilize tax-advantaged accounts. A Traditional 401(k) allows you to invest pre-tax money, lowering your tax bill today. A Roth IRA uses after-tax money, but the massive advantage is that all the growth and future withdrawals are 100% tax-free. Always contribute enough to your 401(k) to get the employer match—it is literal free money."
-      },
-      {
-        keywords: ["crypto", "bitcoin", "ethereum", "blockchain"],
-        response: "Cryptocurrency is a highly volatile, alternative asset class. Bitcoin aims to be a decentralized store of value ('digital gold') with a hard cap of 21 million coins. Ethereum is a platform for decentralized applications. If you choose to invest, treat it as a speculative portion of your portfolio (no more than 1-5% of your net worth) and understand self-custody (cold wallets)."
-      },
-      {
-        keywords: ["real estate", "house", "mortgage", "reit"],
-        response: "Real estate offers four unique wealth-building pillars: 1. Cash flow (rental income minus expenses), 2. Appreciation (the property value goes up), 3. Loan Paydown (your tenants pay your mortgage), and 4. Tax Benefits (depreciation). The magic of real estate is leverage—using a bank's money to control a massive asset."
-      },
-      {
-        keywords: ["compound", "interest", "grow", "time"],
-        response: "Compound interest is when your interest earns interest. As Charlie Munger said, 'The first rule of compounding: Never interrupt it unnecessarily.' Because time is the exponent in the compounding formula, investing $100 a month at age 20 is vastly more powerful than investing $1,000 a month at age 50. Start immediately."
-      },
-      {
-        keywords: ["inflation", "cpi", "purchasing power"],
-        response: "Inflation is the silent thief of wealth. It is the rate at which the general level of prices for goods rises, eroding your purchasing power. If inflation is 4% and your money is in a savings account earning 1%, you are losing 3% of your wealth's power every year. This is why investing in appreciating assets (stocks, real estate) is mandatory, not optional."
-      }
-    ];
-
-    function getAIResponse(query) {
-      const lower = query.toLowerCase();
-      for (const item of AI_KNOWLEDGE_BASE) {
-        if (item.keywords.some(kw => lower.includes(kw))) {
-          return item.response;
-        }
-      }
-      return "I don't have detailed info on that specific topic yet. Try asking about budgeting, stocks, credit scores, taxes, compound interest, or real estate!";
-    }
 
     function App() {
-      const [selectedLevel, setSelectedLevel] = useState("basic");
-      const [selectedTopicId, setSelectedTopicId] = useState("b1");
-      const [activeTab, setActiveTab] = useState("lessons");
-      const [searchTerm, setSearchTerm] = useState("");
+      const [selectedLevel, setSelectedLevel] = useState('Basic');
+      const [selectedTopicId, setSelectedTopicId] = useState(1);
+      const [activeTab, setActiveTab] = useState('lessons');
+      const [searchTerm, setSearchTerm] = useState('');
       const [theaterMode, setTheaterMode] = useState(false);
-      const [watchedVideos, setWatchedVideos] = useState(new Set());
+      const [watchedVideos, setWatchedVideos] = useState([]);
       const [selectedAnswers, setSelectedAnswers] = useState({});
       const [chatMessages, setChatMessages] = useState([
-        { sender: "bot", text: "Welcome to the Masterclass. I am Pappu AI. Ask me to break down any financial concept—from the 50/30/20 budget rule to Options Trading." }
+        { sender: "bot", text: "Welcome to Own Finance Master! Ask me anything." }
       ]);
-      const [inputQuery, setInputQuery] = useState("");
+      const [inputQuery, setInputQuery] = useState('');
       const [isTyping, setIsTyping] = useState(false);
       const chatEndRef = useRef(null);
 
-      // Search and Filter Logic
+      // Search & Filter Logic
       const filteredTopics = useMemo(() => {
-        if (searchTerm.trim() === "") {
+        if (!searchTerm.trim()) {
           return TOPICS.filter((tp) => tp.level === selectedLevel);
         }
         const term = searchTerm.toLowerCase();
-        return TOPICS.filter(tp => 
-          tp.title.toLowerCase().includes(term) || 
-          tp.tags.some(tag => tag.toLowerCase().includes(term)) ||
+        return TOPICS.filter((tp) =>
+          tp.title.toLowerCase().includes(term) ||
           tp.intro.toLowerCase().includes(term)
         );
       }, [selectedLevel, searchTerm]);
 
-        const activeTopic = TOPICS.find((tp) => tp.id === selectedTopicId) || TOPICS[0];
+      const activeTopic = TOPICS.find((tp) => tp.id === selectedTopicId) || TOPICS[0];
 
-  // Auto-scroll chat to bottom
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages, isTyping]);
+      useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, [chatMessages, isTyping]);
 
-  // Chatbot Handler Logic
-  const handleSendMessage = () => {
-    if (!inputQuery.trim()) return;
+      const handleSendMessage = () => {
+        if (!inputQuery.trim()) return;
+        const userMsg = inputQuery.trim();
+        setChatMessages((prev) => [...prev, { sender: 'user', text: userMsg }]);
+        setInputQuery('');
+        setIsTyping(true);
 
-    const userMsg = inputQuery.trim();
-    setChatMessages((prev) => [...prev, { sender: 'user', text: userMsg }]);
-    setInputQuery('');
-    setIsTyping(true);
+        setTimeout(() => {
+          setChatMessages((prev) => [
+            ...prev, 
+            { sender: 'bot', text: 'Financial management is key to long-term wealth building!' }
+          ]);
+          setIsTyping(false);
+        }, 600);
+      };
 
-    setTimeout(() => {
-      let botReply = getAIResponse(userMsg);
-      setChatMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
-      setIsTyping(false);
-    }, 600);
-  };
+      const toggleVideoWatched = (id) => {
+        setWatchedVideos((prev) =>
+          prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+        );
+      };
 
-  const getAIResponse = (query) => {
-    const lowerQ = query.toLowerCase();
-    if (lowerQ.match(/^(hi|hello|hey|greetings)/)) {
-      return "Greetings! I am Pappu AI. How can I assist you with financial concepts today?";
-    }
-    if (lowerQ.includes("money") || lowerQ.includes("value")) {
-      return "Money serves as a medium of exchange, unit of account, and store of value. Its value comes from central bank backing and general public trust!";
-    }
-    if (lowerQ.includes("budget") || lowerQ.includes("50/30/20")) {
-      return "Remember to save regularly and follow the 50/30/20 budgeting rule: 50% Needs, 30% Wants, and 20% Savings!";
-    }
-    return "That is an excellent inquiry. In high-level finance, the optimal approach depends heavily on your timeline and risk tolerance. As a general rule: eliminate toxic high-interest debt first, build a 3-6 month emergency fund, and consistently dollar-cost average into diversified assets. Could you specify if you are asking about this in the context of investing, budgeting, or taxes?";
-  };
+      const handleSelectAnswer = (qIdx, optionIdx) => {
+        setSelectedAnswers((prev) => ({ ...prev, [qIdx]: optionIdx }));
+      };
 
-  const toggleVideoWatched = (id) => {
-    setWatchedVideos((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-
-  const handleSelectAnswer = (qIdx, optionIdx) => {
-    setSelectedAnswers((prev) => ({ ...prev, [qIdx]: optionIdx }));
-  };
-
-  return (
-    <div className={`min-h-screen ${theaterMode ? 'bg-black text-white' : 'bg-[#0B132B] text-slate-100'} font-sans pb-10 transition-colors duration-300`}>
-      {/* Header */}
-      <header className="flex items-center justify-between px-4 py-3 bg-[#1C2541] border-b border-slate-800 sticky top-0 z-50 shadow-md">
-        <div className="flex items-center space-x-3">
-          <div className="bg-[#E0A96D] text-[#0B132B] font-bold text-lg px-3 py-1 rounded">OF</div>
-          <h1 className="text-xl font-bold tracking-wide text-white">
-            OWN FINANCE <span className="text-xs text-emerald-400 font-mono ml-2">v2.0 MASTER</span>
-          </h1>
-        </div>
-        <button className="px-4 py-1.5 rounded-full border border-[#E0A96D] text-[#E0A96D] text-sm font-medium hover:bg-[#E0A96D] hover:text-[#0B132B] transition">
-          বাংলা
-        </button>
-      </header>
-
-      <main className="max-w-4xl mx-auto p-4 space-y-6">
-        {/* Level and Topic Selection Card */}
-        <div className="bg-[#1C2541] p-4 rounded-xl border border-slate-800 shadow-lg space-y-4">
-          <div>
-            <label className="text-xs font-semibold text-[#E0A96D] uppercase tracking-wider block mb-2">
-              Select Level
-            </label>
-            <div className="grid grid-cols-3 gap-2 bg-[#0B132B] p-1 rounded-lg">
-              {['Basic', 'Intermediate', 'Advanced'].map((lvl) => (
-                <button
-                  key={lvl}
-                  onClick={() => {
-                    setSelectedLevel(lvl);
-                    setSelectedTopicId(1);
-                  }}
-                  className={`py-2 text-sm font-medium rounded-md transition ${
-                    selectedLevel === lvl
-                      ? 'bg-[#E0A96D] text-[#0B132B] font-bold shadow'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  {lvl}
-                </button>
-              ))}
+      return (
+        <div className={`min-h-screen ${theaterMode ? 'bg-black text-white' : 'bg-[#0B132B] text-slate-100'} font-sans pb-10 transition-colors duration-300`}>
+          <header className="flex items-center justify-between px-4 py-3 bg-[#1C2541] border-b border-slate-800 sticky top-0 z-50 shadow-md">
+            <div className="flex items-center space-x-3">
+              <div className="bg-[#E0A96D] text-[#0B132B] font-bold text-lg px-3 py-1 rounded">OF</div>
+              <h1 className="text-xl font-bold tracking-wide text-white">
+                OWN FINANCE <span className="text-xs text-emerald-400 font-mono ml-2">v2.0 MASTER</span>
+              </h1>
             </div>
-          </div>
-
-          <div>
-            <label className="text-xs font-semibold text-[#E0A96D] uppercase tracking-wider block mb-2">
-              Select a Topic
-            </label>
-            <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-              {filteredTopics.map((tp) => (
-                <button
-                  key={tp.id}
-                  onClick={() => setSelectedTopicId(tp.id)}
-                  className={`w-full text-left p-3 rounded-lg border transition ${
-                    selectedTopicId === tp.id
-                      ? 'bg-[#1C3144] border-[#E0A96D] text-white font-medium'
-                      : 'bg-[#0B132B] border-slate-800 text-slate-300 hover:bg-[#121A2D]'
-                  }`}
-                >
-                  {tp.id}. {tp.title}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Tab Navigation */}
-        <div className="flex border-b border-slate-800 bg-[#1C2541] rounded-t-xl overflow-x-auto">
-          {[
-            { id: 'lessons', label: 'Lessons' },
-            { id: 'videos', label: 'Video Section' },
-            { id: 'quiz', label: 'Practice & Quiz' },
-            { id: 'ai', label: 'Pappu AI' }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 py-3 px-4 text-center font-semibold text-sm whitespace-nowrap border-b-2 transition ${
-                activeTab === tab.id
-                  ? 'border-[#E0A96D] text-[#E0A96D] bg-[#0B132B]/40'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              {tab.label}
+            <button className="px-4 py-1.5 rounded-full border border-[#E0A96D] text-[#E0A96D] text-sm font-medium hover:bg-[#E0A96D] hover:text-[#0B132B] transition">
+              বাংলা
             </button>
-          ))}
-        </div>
+          </header>
 
-        {/* Tab Content Panels */}
-        <div className="bg-[#1C2541] p-5 rounded-b-xl border border-t-0 border-slate-800 min-h-[360px]">
-          {/* LESSONS TAB */}
-          {activeTab === 'lessons' && activeTopic && (
-            <div className="space-y-6 text-slate-900 bg-[#FAF7F2] p-6 rounded-xl shadow-md">
-              <h2 className="text-2xl font-bold text-[#0B132B] border-b pb-2">{activeTopic.title}</h2>
-              <p className="text-base leading-relaxed text-slate-700">{activeTopic.intro}</p>
-
-              {activeTopic.takeaways && (
-                <div className="bg-[#F3E8DC] p-4 rounded-lg border-l-4 border-[#E0A96D]">
-                  <h3 className="text-xs font-bold uppercase text-[#8C5E3C] tracking-wide mb-2">Key Takeaways</h3>
-                  <ul className="list-disc list-inside space-y-1 text-sm font-medium text-slate-800">
-                    {activeTopic.takeaways.map((point, idx) => (
-                      <li key={idx}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {activeTopic.example && (
-                <div className="bg-[#0B132B] text-slate-100 p-4 rounded-lg">
-                  <h4 className="text-xs font-bold text-[#E0A96D] uppercase mb-1">Practical Example</h4>
-                  <p className="italic text-sm">"{activeTopic.example}"</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* VIDEOS TAB */}
-          {activeTab === 'videos' && activeTopic && (
-            <div className="space-y-4">
-              <div className="flex justify-between items-center flex-wrap gap-2">
-                <h2 className="text-xl font-bold text-white">{activeTopic.title}</h2>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => setTheaterMode(!theaterMode)}
-                    className="px-3 py-1.5 text-xs font-semibold rounded bg-slate-700 text-slate-200 hover:bg-slate-600 transition"
-                  >
-                    Toggle Theater Mode
-                  </button>
-                  <button
-                    onClick={() => toggleVideoWatched(activeTopic.id)}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded transition ${
-                      watchedVideos.includes(activeTopic.id)
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-slate-700 text-slate-200 hover:bg-slate-600'
-                    }`}
-                  >
-                    {watchedVideos.includes(activeTopic.id) ? '✓ WATCHED' : 'MARK LESSON AS WATCHED'}
-                  </button>
-                </div>
-              </div>
-
-              <div className="aspect-video w-full rounded-xl overflow-hidden bg-black border border-slate-800">
-                <iframe
-                  className="w-full h-full"
-                  src={activeTopic.videoUrl || "https://www.youtube.com/embed/dQw4w9WgXcQ"}
-                  title={activeTopic.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
-          )}
-
-          {/* PRACTICE & QUIZ TAB */}
-          {activeTab === 'quiz' && activeTopic && (
-            <div className="space-y-6">
-              <h2 className="text-xl font-bold text-white">{activeTopic.title} - Quiz</h2>
-              {activeTopic.questions?.map((q, qIdx) => (
-                <div key={qIdx} className="bg-[#0B132B] p-4 rounded-lg border border-slate-800 space-y-3">
-                  <p className="font-semibold text-slate-200">{qIdx + 1}. {q.question}</p>
-                  <div className="space-y-2">
-                    {q.options.map((opt, oIdx) => {
-                      const isSelected = selectedAnswers[qIdx] === oIdx;
-                      const isCorrect = oIdx === q.answer;
-                      let btnStyle = "bg-[#1C2541] text-slate-300 border-slate-700";
-                      if (isSelected) {
-                        btnStyle = isCorrect
-                          ? "bg-emerald-900 border-emerald-500 text-emerald-200"
-                          : "bg-rose-900 border-rose-500 text-rose-200";
-                      }
-                      return (
-                        <button
-                          key={oIdx}
-                          onClick={() => handleSelectAnswer(qIdx, oIdx)}
-                          className={`w-full text-left p-2.5 rounded text-sm border transition ${btnStyle}`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* PAPPU AI TAB */}
-          {activeTab === 'ai' && (
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">Ask Pappu AI</h2>
-              <div className="h-80 overflow-y-auto space-y-3 p-3 bg-[#0B132B] rounded-xl border border-slate-800">
-                {chatMessages.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[85%] p-3 rounded-2xl text-sm ${
-                        msg.sender === 'user'
-                          ? 'bg-[#2563EB] text-white rounded-tr-none font-medium'
-                          : 'bg-[#1C2541] text-slate-200 rounded-tl-none border border-slate-700'
+          <main className="max-w-4xl mx-auto p-4 space-y-6">
+            <div className="bg-[#1C2541] p-4 rounded-xl border border-slate-800 shadow-lg space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-[#E0A96D] uppercase tracking-wider block mb-2">
+                  Select Level
+                </label>
+                <div className="grid grid-cols-3 gap-2 bg-[#0B132B] p-1 rounded-lg">
+                  {['Basic', 'Intermediate', 'Advanced'].map((lvl) => (
+                    <button
+                      key={lvl}
+                      onClick={() => {
+                        setSelectedLevel(lvl);
+                        setSelectedTopicId(1);
+                      }}
+                      className={`py-2 text-sm font-medium rounded-md transition ${
+                        selectedLevel === lvl
+                          ? 'bg-[#E0A96D] text-[#0B132B] font-bold shadow'
+                          : 'text-slate-400 hover:text-white'
                       }`}
                     >
-                      {msg.sender === 'bot' && (
-                        <div className="text-[10px] uppercase font-bold text-slate-400 mb-1">
-                          Pappu AI
-                        </div>
-                      )}
-                      {msg.text}
-                    </div>
-                  </div>
-                ))}
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-[#1C2541] text-slate-400 p-3 rounded-2xl text-xs italic border border-slate-700">
-                      Pappu AI is typing...
-                    </div>
-                  </div>
-                )}
-                <div ref={chatEndRef} />
+                      {lvl}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={inputQuery}
-                  onChange={(e) => setInputQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder="Ask a financial question..."
-                  className="flex-1 bg-[#0B132B] border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#2563EB]"
-                />
-                <button
-                  onClick={handleSendMessage}
-                  className="bg-[#10B981] hover:bg-emerald-600 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition"
-                >
-                  SEND
-                </button>
+              <div>
+                <label className="text-xs font-semibold text-[#E0A96D] uppercase tracking-wider block mb-2">
+                  Select a Topic
+                </label>
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {filteredTopics.map((tp) => (
+                    <button
+                      key={tp.id}
+                      onClick={() => setSelectedTopicId(tp.id)}
+                      className={`w-full text-left p-3 rounded-lg border transition ${
+                        selectedTopicId === tp.id
+                          ? 'bg-[#1C3144] border-[#E0A96D] text-white font-medium'
+                          : 'bg-[#0B132B] border-slate-800 text-slate-300 hover:bg-[#121A2D]'
+                      }`}
+                    >
+                      {tp.id}. {tp.title}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          )}
+
+            <div className="flex border-b border-slate-800 bg-[#1C2541] rounded-t-xl overflow-x-auto">
+              {[
+                { id: 'lessons', label: 'Lessons' },
+                { id: 'videos', label: 'Video Section' },
+                { id: 'quiz', label: 'Practice & Quiz' },
+                { id: 'ai', label: 'Pappu AI' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex-1 py-3 px-4 text-center font-semibold text-sm whitespace-nowrap border-b-2 transition ${
+                    activeTab === tab.id
+                      ? 'border-[#E0A96D] text-[#E0A96D] bg-[#0B132B]/40'
+                      : 'border-transparent text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="bg-[#1C2541] p-5 rounded-b-xl border border-t-0 border-slate-800 min-h-[360px]">
+              {activeTab === 'lessons' && activeTopic && (
+                <div className="space-y-6 text-slate-900 bg-[#FAF7F2] p-6 rounded-xl shadow-md">
+                  <h2 className="text-2xl font-bold text-[#0B132B] border-b pb-2">{activeTopic.title}</h2>
+                  <p className="text-base leading-relaxed text-slate-700">{activeTopic.intro}</p>
+                </div>
+              )}
+
+              {activeTab === 'ai' && (
+                <div className="space-y-4">
+                  <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">Ask Pappu AI</h2>
+                  <div className="h-80 overflow-y-auto space-y-3 p-3 bg-[#0B132B] rounded-xl border border-slate-800">
+                    {chatMessages.map((msg, index) => (
+                      <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${
+                          msg.sender === 'user' ? 'bg-[#2563EB] text-white' : 'bg-[#1C2541] text-slate-200'
+                        }`}>
+                          {msg.text}
+                        </div>
+                      </div>
+                    ))}
+                    <div ref={chatEndRef} />
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={inputQuery}
+                      onChange={(e) => setInputQuery(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder="Ask a question..."
+                      className="flex-1 bg-[#0B132B] border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none"
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      className="bg-[#10B981] hover:bg-emerald-600 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition"
+                    >
+                      SEND
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </main>
+
+          <footer className="text-center mt-10 text-xs text-slate-500 space-y-1">
+            <p>Developed by <span className="text-emerald-400 font-semibold">Pappu Singha Roy</span></p>
+            <p className="text-[10px] uppercase tracking-wider text-slate-600">An Education & Art Store Initiative</p>
+          </footer>
         </div>
-      </main>
+      );
+    }
 
-      {/* Footer */}
-      <footer className="text-center mt-10 text-xs text-slate-500 space-y-1">
-        <p>
-          Developed by <span className="text-emerald-400 font-semibold">Pappu Singha Roy</span>
-        </p>
-        <p className="text-[10px] uppercase tracking-wider text-slate-600">
-          An Education & Art Store Initiative
-        </p>
-      </footer>
-    </div>
-  );
-}
-
-// Render root component
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
-root.render(<App />);
-                </script>
-  </body>
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
+  </script>
+</body>
 </html>
-
-    
